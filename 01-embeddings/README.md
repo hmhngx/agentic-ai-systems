@@ -36,7 +36,7 @@ If no key is available, it falls back to a local deterministic embedding path so
 |---------|----------------------------|-----------------|
 | Dense embeddings | Each sentence becomes a 1024-dimensional float vector | Meaning is distributed across many dimensions instead of a few keywords |
 | One model, one space | All sentences are embedded with the same provider and dimension setting | Similarity scores are only valid inside the same vector space |
-| Cosine similarity | `A @ B / (||A|| * ||B||)` after normalizing rows | Measures semantic direction while ignoring vector length |
+| Cosine similarity | Dot product of row-normalized vectors | Measures semantic direction while ignoring vector length |
 | High-dimensional geometry | A vector is a point in semantic space, not a single feature | Small angle differences can represent meaning differences |
 | Topic clustering | Similar sentences produce darker blocks on the heatmap diagonal | Gives a visual sanity check that the embedding space is coherent |
 | Batch inference | All 20 sentences are embedded in one call | Faster and simpler than one request per sentence |
