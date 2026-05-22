@@ -108,3 +108,10 @@ uploads/
 temp/
 tmp/
 .cache/
+
+# Local generated images
+heatmap.png
+results/
+
+# Code explanations
+explanations/
