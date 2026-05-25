@@ -1,51 +1,90 @@
 # 02 — Chunking
 
-## Objective
+## What this module shows
 
-This module covers document segmentation strategies—the step that most silently destroys RAG quality when done wrong. After completing this module, you will be able to implement fixed-size, sentence-boundary, semantic, AST-based, and agentic chunking strategies; configure overlap for context continuity; and build parent-child retrieval indexes that return precise child chunks while providing broad parent context to the LLM.
+This folder benchmarks four chunking strategies on the same PDF text and scores each run with **ICC (Intrachunk Cohesion)**—mean pairwise cosine similarity between sentences inside a chunk. Higher ICC usually means chunks stay on one topic; the CLI prints token stats and picks the best strategy for the sample document.
 
-## Core concepts
+| Strategy | How it splits | Defaults |
+|----------|---------------|----------|
+| **naive** | Fixed character windows | 1000 chars, no overlap |
+| **recursive** | LangChain hierarchy (`\n\n` → `\n` → space) | 1000 chars, 100-char overlap |
+| **sentence** | spaCy sentences, merged up to a char budget | ~1000 chars per chunk |
+| **semantic** | Embedding breakpoints between sentences (adjacent sim below 0.4), then char merge | ~1000 chars per chunk |
 
-| Concept | Mental model (one sentence) | Why it matters in production |
-|---------|----------------------------|------------------------------|
-| Fixed-size chunking | Splitting text every N tokens with a sliding window overlap | Fast and predictable, but cuts mid-sentence and mid-paragraph—acceptable for homogeneous prose |
-| Semantic chunking | Splitting at embedding-detected topic boundaries where adjacent sentences diverge | Preserves topical coherence; chunks align with how humans structure arguments |
-| AST-based chunking | Parsing source code or structured documents into syntactic units (functions, classes, sections) | Code RAG fails without respecting syntax boundaries—a 512-token window splits functions in half |
-| Parent-child retrieval | Indexing small child chunks for precision, returning parent chunks for LLM context | Solves the precision-vs-context tradeoff: retrieve precisely, generate with breadth |
-| Chunk overlap | Duplicating N tokens across adjacent chunk boundaries | Prevents answers that span chunk boundaries from being unreachable by any single retrieval hit |
+## Layout
 
-## Implementation artifacts
+```
+02-chunking/
+├── benchmark.py          # CLI: load PDF → chunk → evaluate → table + winner
+├── sample_doc.pdf        # Multi-chapter sample (regenerate with script below)
+├── src/
+│   ├── chunkers.py       # naive, recursive, sentence, semantic
+│   ├── evaluator.py      # ICC + token statistics
+│   └── pdf_loader.py     # PyMuPDF text extraction
+├── scripts/
+│   └── generate_sample_pdf.py
+├── tests/
+├── requirements.txt
+├── .gitignore
+├── Makefile              # Unix/Git Bash shortcuts (CI uses this)
+└── pytest.ini
+```
 
-| File | Description | Status |
-|------|-------------|--------|
-| `fixed_chunker.py` | Token-based fixed-size chunker with configurable size and overlap | 🔲 Pending |
-| `sentence_chunker.py` | Sentence-boundary-aware chunker using NLTK or spaCy sentence segmentation | 🔲 Pending |
-| `semantic_chunker.py` | Embedding-based breakpoint detection using cosine distance thresholds | 🔲 Pending |
-| `ast_chunker.py` | Tree-sitter AST parser for Python/TypeScript code chunking by function and class | 🔲 Pending |
-| `agentic_chunker.py` | LLM-guided chunking that proposes boundaries based on document structure | 🔲 Pending |
-| `parent_child_store.py` | Dual-index store linking child chunks to parent documents in Qdrant | 🔲 Pending |
+## Install
 
-## Key decisions & tradeoffs
+From this directory (venv recommended):
 
-- Semantic chunking will be chosen as the default for prose documents, with a cosine distance threshold of 0.25 tuned on a held-out evaluation set—fixed-size chunking reserved for speed-critical paths.
-- A 512-token cap will be enforced on all semantic chunks to prevent oversized segments that dilute embedding signal, accepting variable chunk sizes below the cap.
-- AST-based chunking via tree-sitter will be used exclusively for code files (.py, .ts, .js), never mixing code and prose chunkers in the same pipeline.
-- Parent-child retrieval will use 128-token child chunks indexed for search and 1024-token parent chunks injected into the LLM prompt—trading storage cost for retrieval precision.
-- 10% token overlap will be applied to all fixed-size chunks; semantic chunks will rely on boundary detection instead of overlap to avoid redundant storage.
+```powershell
+cd "02-chunking"
+python -m pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+```
 
-## Evaluation
+The first semantic run downloads `all-MiniLM-L6-v2` via `sentence-transformers` unless models are already cached. `benchmark.py` sets `HF_HUB_OFFLINE=1` by default for quieter runs; remove those env vars if you need a fresh Hub download.
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Chunk boundary F1 (vs. human-annotated) | ≥ 0.80 | |
-| Parent-child retrieval recall@5 | ≥ 0.90 | |
-| Context preservation score (answer spans chunk boundary) | ≥ 0.85 | |
-| Chunking throughput (docs/minute) | ≥ 50 | |
+## Run the benchmark
+
+```powershell
+python benchmark.py --pdf_path sample_doc.pdf
+```
+
+Example output columns: `Strategy`, `Total Chunks`, `Avg Tokens`, `Min Tokens`, `Max Tokens`, `Std Tokens`, `ICC Score`, plus a line naming the best ICC strategy.
+
+Regenerate the sample PDF:
+
+```powershell
+python scripts/generate_sample_pdf.py
+```
+
+## Tests
+
+```powershell
+# Fast suite (skips @pytest.mark.slow semantic/model tests)
+python -m pytest tests/ -v -m "not slow"
+
+# Full suite
+python -m pytest tests/ -v
+
+# Coverage gate (≥80% on src/)
+python -m pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=80
+```
+
+On WSL or Git Bash you can use `make install`, `make test-fast`, `make benchmark`, etc. from the `Makefile`.
+
+GitHub Actions (`.github/workflows/ci.yml`) runs lint, fast tests, and an 80% coverage gate on pushes that touch `02-chunking/`.
+
+## Concepts
+
+| Concept | In this code | Why it matters |
+|---------|--------------|----------------|
+| Fixed-size chunking | `naive_chunk`, `recursive_chunk` | Fast and predictable; can cut mid-thought without overlap or hierarchy |
+| Sentence boundaries | `sentence_chunk` + spaCy | Avoids splitting mid-sentence when merging to a size budget |
+| Semantic boundaries | `semantic_chunk` + MiniLM similarities | Groups sentences that embed similarly before size caps |
+| ICC | `evaluate_chunks` samples up to 30 chunks | Cheap proxy for “does this chunk read like one topic?” without human labels |
+| Overlap | `recursive_chunk` only (100 chars) | Helps answers that span naive window edges |
 
 ## References
 
-- LangChain Text Splitters documentation: https://python.langchain.com/docs/how_to/recursive_text_splitter/
-- LlamaIndex Node Parser documentation: https://docs.llamaindex.ai/en/stable/module_guides/indexing/document_management/
-- Anthropic (2024). *Contextual Retrieval*. https://www.anthropic.com/news/contextual-retrieval
-- tree-sitter documentation (AST-based chunking for code): https://tree-sitter.github.io/tree-sitter/
-- Quivr semantic chunking implementation: https://github.com/QuivrHQ/quivr/tree/main/core/quivr_core/semantic_chunker
+- [LangChain text splitters](https://python.langchain.com/docs/how_to/recursive_text_splitter/)
+- [Anthropic — Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval)
+- [Quivr semantic chunker](https://github.com/QuivrHQ/quivr/tree/main/core/quivr_core/semantic_chunker) (similar embedding-breakpoint idea)
