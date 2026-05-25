@@ -1,0 +1,5 @@
+# Local run artifacts (do not commit)
+benchmark_output.txt
+test_output.txt
+.coverage
+pytest-cache-files-*/
