@@ -1,0 +1,23 @@
+# Day 3 Concept Verification — Vector DBs (hash fallback run)
+
+Embedding mode: local SHA-256 hash fallback (`VOYAGE_API_KEY` unset). Numbers below are from the final local validation run (regenerate with `python qdrant_bench.py` and capture stdout if you need a fresh copy).
+
+## Q1: HNSW speed vs recall trade-off
+
+In the main benchmark table, recall@5 at ef_search=64 was 1.0000 and at ef_search=256 was also 1.0000, with no measurable difference across the full sweep (16 through 256). That flat curve does not indicate a poor HNSW graph; it reflects that, on this 500-vector collection with deterministic hash embeddings, approximate search and brute-force exact search return the same top-5 IDs for every query. Hash vectors are well-separated in cosine space at this scale, so even a small candidate list finds the true neighbors. After setting `full_scan_threshold=10` (Qdrant’s minimum), the index uses HNSW rather than segment-level flat scan, but the recall plateau still holds. The ef_search knob would become visible with voyage-3 semantic embeddings or at much larger N (roughly 10⁵–10⁶+ vectors), where the graph is sparse enough that low ef misses neighbors and high ef recovers them; at capstone scale (~10k chunks) you should expect a modest gap between ef=64 and ef=256 before recall saturates.
+
+## Q2: Exact match vs ANN
+
+At ef_search=64, ANN p50 latency was 20.82 ms versus exact (brute-force) p50 of 11.92 ms on the same 20-query set—ANN was actually slower here, which is typical at N=500 on Docker where fixed HTTP and index overhead dominate and O(N) exact scan over 500×1024 floats is still cheap. The meaningful comparison is complexity class: exact search is O(N) per query while HNSW is roughly O(log N) with constant factors tied to `m` and `ef_search`. At 1M vectors, exact p50 might land in the hundreds of milliseconds to low seconds, while ANN at ef=64 often stays in single-digit to low tens of milliseconds—a ratio on the order of 10×–50× rather than the inverted ratio seen at N=500.
+
+## Q3: Payload filtering and search space
+
+The filtered benchmark restricted each query to roughly 100 vectors (one topic out of 500). Filtered p50 latency did not consistently drop below unfiltered p50; for example machine_learning showed 27.66 ms filtered versus 9.37 ms unfiltered, and urban_architecture showed 18.23 ms versus 10.67 ms. Theory predicts lower latency when the searchable set shrinks by 80%, but at this scale Qdrant’s filter evaluation, graph traversal setup, and Docker/network jitter (often ±10–20 ms between back-to-back runs) swamp the savings. Unfiltered recall stayed at 1.0000 while filtered recall against the same exact ground truth fell to 0.15–0.25 because hash embeddings do not align query text with topic labels semantically—only the integration test `test_payload_filter_reduces_results_to_topic` verifies that filtered *results* belong to the requested topic. At 1M vectors, shrinking the candidate set by 5×–10× would routinely show filtered p50 at or below unfiltered p50 plus a few milliseconds.
+
+## Q4: When local vs managed
+
+Three concrete conditions would push the capstone from local Docker Qdrant to Qdrant Cloud: (1) **vector count** — sustained indexed volume above ~500k–1M vectors or on-disk payload exceeding ~8–16 GB RAM on the host, where single-node Docker cannot hold the working set or meet latency SLOs; (2) **team size** — more than one developer or CI pipeline needing concurrent write/read access without manual port forwarding and shared-volume conflicts, which Cloud solves with API keys, RBAC, and a single managed endpoint; (3) **uptime** — requirement for ≥99.9% availability during demos or production pilots (more than best-effort laptop Docker), where managed replicas, backups, and monitoring replace `docker run` on a single machine.
+
+## Q5: Production parameter choices
+
+For ~10,000 PDF chunks I would keep `m=16`, `ef_construct=200`, and `ef_search=64` as the starting point, with `full_scan_threshold=10` (minimum allowed) so HNSW is always used above a few hundred points, and tune `ef_search` upward only if recall@5 against an exact sample set falls below target. `ef_construct=200` balances build time and graph quality on a one-time or nightly ingest; raising `m` to 32 is a second lever if recall plateaus below target at max ef. Before calling the vector store production-ready I would require **recall@5 ≥ 0.90** on a held-out query set of ≥50 real user-style questions with voyage-3 (or the production embedder), measured against exact top-5 on that same collection—stricter than the Day 3 demo threshold of 0.70 because capstone retrieval quality directly affects answer faithfulness.

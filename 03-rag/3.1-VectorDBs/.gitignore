@@ -1,0 +1,19 @@
+# Local Python environment
+.venv/
+venv/
+
+# Qdrant Docker persistence (created by scripts/start_qdrant.sh)
+qdrant_storage/
+
+# Validation / benchmark run artifacts (regenerate locally)
+benchmark_run.txt
+test_offline.txt
+test_full.txt
+pytest-cache-files-*/
+
+# Pytest (if cache lands in-module)
+.pytest_cache/
+
+# Secrets
+.env
+.env.local

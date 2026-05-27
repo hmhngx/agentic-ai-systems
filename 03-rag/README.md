@@ -18,6 +18,7 @@ This module covers retrieval-augmented generation from naive baseline through pr
 
 | File | Description | Status |
 |------|-------------|--------|
+| [`3.1-VectorDBs/`](3.1-VectorDBs/) | Local Qdrant HNSW vs exact benchmark, recall@5, payload filtering, pytest suite | ✅ Complete |
 | `naive_rag.py` | Baseline embed-query-retrieve-generate pipeline with RAGAS evaluation | 🔲 Pending |
 | `hybrid_rag.py` | BM25 + dense search with RRF fusion and Cohere cross-encoder reranking | 🔲 Pending |
 | `hyde_retrieval.py` | Hypothetical Document Embedding query transformation before retrieval | 🔲 Pending |
