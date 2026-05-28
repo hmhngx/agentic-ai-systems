@@ -11,6 +11,9 @@ This folder benchmarks four chunking strategies on the same PDF text and scores 
 | **sentence** | spaCy sentences, merged up to a char budget | ~1000 chars per chunk |
 | **semantic** | Embedding breakpoints between sentences (adjacent sim below 0.4), then char merge | ~1000 chars per chunk |
 
+## Results
+![Chunking strategies ICC results](02-chunking/results/image.png)
+
 ## Layout
 
 ```
