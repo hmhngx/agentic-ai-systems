@@ -1,16 +1,16 @@
-"""Embedding module. Supports voyage-3 (API) and a local hash fallback.
+"""Embedding module. Supports OpenRouter embeddings and a local hash fallback.
 
 Architecture decision: isolated here so ``qdrant_ops.py`` and
-``benchmark.py`` never import ``voyageai`` or ``anthropic`` directly. If
+``benchmark.py`` never import provider SDKs directly. If
 the embedding provider changes, only this file changes.
 
-Fallback semantics: when ``VOYAGE_API_KEY`` is missing the script still
+Fallback semantics: when ``OPENROUTER_API_KEY`` is missing the script still
 runs end-to-end -- ``_hash_embed`` produces deterministic unit vectors so
 the benchmark plumbing exercises the same code paths. Those vectors are
 NOT semantic, so the recall@5 numbers from a hash-only run only validate
 pipeline wiring (unfiltered ANN vs exact recall is often 1.0 at N=500
 because hash vectors are well-separated; filtered-topic recall stays low).
-Only the Voyage path produces semantically meaningful recall for tuning
+Only the OpenRouter path produces semantically meaningful recall for tuning
 ef_search and production readiness.
 """
 
@@ -23,52 +23,52 @@ from typing import Optional
 
 import numpy as np
 from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
 
 
 # Dimension and model name kept as module-level constants so callers
 # (qdrant_ops.create_hnsw_collection) can read them without instantiating
-# a client. 1024 matches voyage-3's native output dim; the hash fallback
+# a client. 1536 matches openai/text-embedding-3-small default output dim;
+# the hash fallback
 # pads to the same dimension so collection configs do not need to change.
-EMBEDDING_DIM: int = 1024
-EMBEDDING_MODEL: str = "voyage-3"
+EMBEDDING_DIM: int = int(os.getenv("OPENROUTER_EMBEDDING_DIM", "1536"))
+EMBEDDING_MODEL: str = os.getenv("OPENROUTER_EMBEDDING_MODEL", "openai/text-embedding-3-small")
 
-# Voyage accepts up to 128 texts per call. 50 is conservative: longer
+# Embedding APIs support batching. 50 is conservative: longer
 # chunks consume more tokens per request, and 50 keeps us well under
 # any per-request token cap while still amortising HTTPS overhead.
 _DEFAULT_BATCH_SIZE: int = 50
 
 # Cache the loaded client and the "we warned about fallback" state so a
 # single CLI invocation prints the warning exactly once.
-_voyage_client: "Optional[object]" = None
-_voyage_loaded: bool = False
+_openrouter_client: Optional[OpenAI] = None
+_openrouter_loaded: bool = False
 _fallback_warned: bool = False
 
 
-def _load_client() -> "Optional[object]":
-    """Lazily build and cache a Voyage client.
+def _load_client() -> Optional[OpenAI]:
+    """Lazily build and cache an OpenRouter client.
 
-    Reads ``.env`` (via ``python-dotenv``) so ``VOYAGE_API_KEY`` can live
-    in a project-local ``.env`` file. Returns ``None`` if no Voyage key
+    Reads ``.env`` (via ``python-dotenv``) so ``OPENROUTER_API_KEY`` can live
+    in a project-local ``.env`` file. Returns ``None`` if no API key
     is available, in which case callers fall back to ``_hash_embed``.
-
-    Note on ``ANTHROPIC_API_KEY``: Anthropic does not ship a public
-    text-embedding API, so an Anthropic key alone cannot drive Voyage.
-    The check below only surfaces that fact in the warning text.
     """
-    global _voyage_client, _voyage_loaded
-    if _voyage_loaded:
-        return _voyage_client
+    global _openrouter_client, _openrouter_loaded
+    if _openrouter_loaded:
+        return _openrouter_client
 
     load_dotenv()
-    voyage_key: str | None = os.getenv("VOYAGE_API_KEY")
-    if voyage_key:
-        import voyageai  # local import keeps the dependency optional at runtime
-        _voyage_client = voyageai.Client(api_key=voyage_key)
+    api_key: str | None = os.getenv("OPENROUTER_API_KEY")
+    if api_key:
+        base_url: str = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+        _openrouter_client = OpenAI(api_key=api_key, base_url=base_url)
     else:
-        _voyage_client = None
+        _openrouter_client = None
 
-    _voyage_loaded = True
-    return _voyage_client
+    _openrouter_loaded = True
+    return _openrouter_client
 
 
 def _warn_fallback_once() -> None:
@@ -76,11 +76,9 @@ def _warn_fallback_once() -> None:
     global _fallback_warned
     if _fallback_warned:
         return
-    has_anthropic: bool = bool(os.getenv("ANTHROPIC_API_KEY"))
-    suffix: str = " (ANTHROPIC_API_KEY is set but does not power voyage-3)" if has_anthropic else ""
     print(
-        f"  WARN: VOYAGE_API_KEY not found -- using local hash embeddings"
-        f"{suffix}. recall@5 numbers will not be semantically meaningful.",
+        "  WARN: OPENROUTER_API_KEY not found -- using local hash embeddings. "
+        "recall@5 numbers will not be semantically meaningful.",
         file=sys.stderr,
     )
     _fallback_warned = True
@@ -121,22 +119,22 @@ def _hash_embed(text: str, dim: int = EMBEDDING_DIM) -> np.ndarray:
     return vec.astype(np.float32, copy=False)
 
 
-def _embed_with_voyage(
-    client: object,
+def _embed_with_openrouter(
+    client: OpenAI,
     texts: list[str],
     input_type: str,
     batch_size: int,
 ) -> np.ndarray:
-    """Call the Voyage SDK in batches and stack the results."""
+    """Call OpenRouter's OpenAI-compatible embeddings API in batches."""
     rows: list[list[float]] = []
     for start in range(0, len(texts), batch_size):
         batch: list[str] = texts[start : start + batch_size]
-        result = client.embed(  # type: ignore[attr-defined]
-            texts=batch,                 # texts to embed; up to 128 per Voyage docs
-            model=EMBEDDING_MODEL,       # voyage-3: 1024-dim general-purpose model
-            input_type=input_type,       # "document" or "query" -- routes to different output regions
+        result = client.embeddings.create(
+            input=batch,
+            model=EMBEDDING_MODEL,
+            extra_body={"input_type": input_type},
         )
-        rows.extend(result.embeddings)
+        rows.extend(item.embedding for item in result.data)
     return np.asarray(rows, dtype=np.float32)
 
 
@@ -150,14 +148,14 @@ def embed_texts(
     ``input_type``:
       * ``"document"`` -- corpus chunks being indexed (retrievable docs).
       * ``"query"``    -- search queries (lookup intents).
-      Using the wrong ``input_type`` degrades retrieval quality because
-      Voyage maps documents and queries to slightly different regions of
+      Using the wrong ``input_type`` can degrade retrieval quality because
+      embedding providers map documents and queries to different regions of
       the output space on purpose.
 
     ``batch_size``: bound on texts per API call. Defaults to 50; bump up
     to 128 for short inputs to reduce round-trips.
 
-    Fallback: if no Voyage client is available, every text is embedded
+    Fallback: if no OpenRouter client is available, every text is embedded
     with ``_hash_embed`` and a one-time warning is printed.
 
     The returned matrix is L2-normalized so cosine similarity equals the
@@ -172,14 +170,14 @@ def embed_texts(
             f"input_type must be 'document' or 'query' (got {input_type!r})"
         )
 
-    client: "Optional[object]" = _load_client()
+    client: Optional[OpenAI] = _load_client()
     if client is None:
         _warn_fallback_once()
         matrix: np.ndarray = np.stack(
             [_hash_embed(text, EMBEDDING_DIM) for text in texts], axis=0
         )
     else:
-        matrix = _embed_with_voyage(client, texts, input_type, batch_size)
+        matrix = _embed_with_openrouter(client, texts, input_type, batch_size)
 
     return _l2_normalize(matrix)
 

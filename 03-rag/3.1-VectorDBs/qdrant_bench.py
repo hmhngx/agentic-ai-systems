@@ -133,9 +133,11 @@ def embed_corpus_step(corpus: list[dict]) -> np.ndarray:
     """Step 3/7. Embed all corpus texts and report timing + provider."""
     import os
 
-    api_key_present: bool = bool(os.getenv("VOYAGE_API_KEY"))
+    api_key_present: bool = bool(os.getenv("OPENROUTER_API_KEY"))
     provider: str = (
-        "voyage-3 (semantic)" if api_key_present else "local hash (fallback -- set VOYAGE_API_KEY)"
+        f"{EMBEDDING_MODEL} via OpenRouter (semantic)"
+        if api_key_present
+        else "local hash (fallback -- set OPENROUTER_API_KEY)"
     )
     print(f"\n[3/7] Embedding {len(corpus)} chunks via {EMBEDDING_MODEL}...")
     print(f"  Embedding {len(corpus)} texts in batches of 50...")

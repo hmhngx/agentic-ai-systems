@@ -16,6 +16,14 @@ The deliverable is a single CLI (`qdrant_bench.py`) that prints a seven-step pip
 | recall@5 formula | [`src/benchmark.py`](src/benchmark.py) `compute_recall_at_k` | Set intersection / k (order-independent) |
 | p50 / p95 latency | [`src/benchmark.py`](src/benchmark.py) `_percentiles` | Tail-aware SLAs, not noisy means |
 
+## Results
+
+![alt text](results/image.png)
+![alt text](results/image2.png)
+![alt text](results/image3.png)
+
+
+
 ## Layout
 
 ```
@@ -38,7 +46,7 @@ The deliverable is a single CLI (`qdrant_bench.py`) that prints a seven-step pip
 │   └── test_cli.py             # offline + integration (slow full CLI)
 └── src/
     ├── corpus.py             # 500-chunk corpus + 20 stratified queries
-    ├── embedder.py           # voyage-3 + deterministic hash fallback
+    ├── embedder.py           # OpenRouter embeddings + deterministic hash fallback
     ├── qdrant_ops.py         # all Qdrant API calls (inline param comments)
     └── benchmark.py          # recall@5 + latency aggregation
 ```
@@ -49,7 +57,7 @@ The deliverable is a single CLI (`qdrant_bench.py`) that prints a seven-step pip
 
 - **Python 3.10+** (tested on 3.12)
 - **Docker Desktop** (for Qdrant)
-- **Optional:** [Voyage AI](https://www.voyageai.com/) API key for semantically meaningful recall@5
+- **Optional:** [OpenRouter](https://openrouter.ai/) API key for semantically meaningful recall@5
 
 ## Install (Windows)
 
@@ -63,15 +71,13 @@ python -m pip install -r requirements.txt
 Optional `.env` in this directory (loaded by `python-dotenv`):
 
 ```text
-VOYAGE_API_KEY=your-voyage-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
 ```
 
-| Mode | `VOYAGE_API_KEY` | recall@5 in tables | Use case |
+| Mode | `OPENROUTER_API_KEY` | recall@5 in tables | Use case |
 |------|------------------|-------------------|----------|
 | **Hash fallback** | unset | Often **1.0** unfiltered at N=500 (ANN ≡ exact); **not** for tuning ef_search | CI plumbing, offline tests, no API cost |
-| **Voyage voyage-3** | set | Meaningful sweep (expect recall to rise with `ef_search`) | Day 3 sign-off, production-like retrieval |
-
-`ANTHROPIC_API_KEY` does **not** enable embeddings — Anthropic has no public embedding API. The embedder only warns if Anthropic is set without Voyage.
+| **OpenRouter semantic embeddings** | set | Meaningful sweep (expect recall to rise with `ef_search`) | Day 3 sign-off, production-like retrieval |
 
 ## Start Qdrant (Docker)
 
@@ -160,7 +166,7 @@ Defaults are in [`src/qdrant_ops.py`](src/qdrant_ops.py); every knob has an inli
 
 ## What “good” looks like
 
-### With `VOYAGE_API_KEY` (recommended for sign-off)
+### With `OPENROUTER_API_KEY` (recommended for sign-off)
 
 - recall@5 **increases** with `ef_search` (not flat at 1.0 across the sweep), plateauing near **1.0** around 128–256
 - recall@5 at **ef_search=64** ≥ **0.70** on the 20-query set
@@ -174,7 +180,7 @@ Defaults are in [`src/qdrant_ops.py`](src/qdrant_ops.py); every knob has an inli
 - Unfiltered recall@5 is often **1.0 for all ef_search** (ANN matches exact on 500 hash vectors) — **do not** use this to tune HNSW
 - Filtered recall@5 vs exact ground truth is **low** (~0.15–0.25) because hashes are not semantic; topic filter correctness is still verified in tests
 
-At **500 vectors**, absolute latencies are tens of milliseconds and noisy. The **shapes** (ef_search trade-off with Voyage, exact vs ANN at scale, filter shrinking search space) match production behaviour at **1M+** vectors where gaps are 10×–50×.
+At **500 vectors**, absolute latencies are tens of milliseconds and noisy. The **shapes** (ef_search trade-off with semantic embeddings, exact vs ANN at scale, filter shrinking search space) match production behaviour at **1M+** vectors where gaps are 10×–50×.
 
 ## Day 3 validation (quick reference)
 
@@ -203,4 +209,4 @@ Written Q1–Q5: [`DAY3_CONCEPT_ANSWERS.md`](DAY3_CONCEPT_ANSWERS.md).
 
 - [Qdrant HNSW configuration](https://qdrant.tech/documentation/concepts/indexing/#vector-index)
 - [Qdrant filtering](https://qdrant.tech/documentation/concepts/filtering/)
-- [Voyage voyage-3](https://docs.voyageai.com/docs/embeddings)
+- [OpenRouter models and embeddings](https://openrouter.ai/models)

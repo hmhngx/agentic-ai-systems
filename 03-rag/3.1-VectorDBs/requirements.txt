@@ -1,8 +1,8 @@
 # Install: pip install -r requirements.txt
-# Requires: Docker (Qdrant on localhost:6333). Optional: VOYAGE_API_KEY for semantic embeddings.
+# Requires: Docker (Qdrant on localhost:6333). Optional: OPENROUTER_API_KEY for semantic embeddings.
 # Qdrant start: bash scripts/start_qdrant.sh  (or see README PowerShell one-liner)
 qdrant-client>=1.9.0
-voyageai>=0.2.0
+openai>=1.0.0
 numpy>=1.26.0
 pandas>=2.0.0
 python-dotenv>=1.0.0

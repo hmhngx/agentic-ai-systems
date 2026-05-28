@@ -18,10 +18,10 @@ from src.qdrant_ops import (
 
 
 def _reset_embedder_state() -> None:
-    """Clear cached Voyage client so hash fallback is used."""
+    """Clear cached embedding client so hash fallback is used."""
     emb = importlib.import_module("src.embedder")
-    emb._voyage_loaded = False
-    emb._voyage_client = None
+    emb._openrouter_loaded = False
+    emb._openrouter_client = None
     emb._fallback_warned = False
 
 
@@ -69,8 +69,7 @@ def small_corpus():
 @pytest.fixture(scope="session")
 def sample_embeddings(small_corpus, monkeypatch_session):
     """Hash-fallback embeddings for all 50 small_corpus chunks."""
-    monkeypatch_session.delenv("VOYAGE_API_KEY", raising=False)
-    monkeypatch_session.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch_session.delenv("OPENROUTER_API_KEY", raising=False)
     _reset_embedder_state()
     texts = [c["text"] for c in small_corpus]
     return embed_texts(texts, input_type="document")

@@ -12,14 +12,13 @@ from src.embedder import EMBEDDING_DIM, embed_single, embed_texts
 @pytest.fixture(autouse=True)
 def _hash_only(monkeypatch):
     """Force hash fallback by clearing API keys and resetting client cache."""
-    monkeypatch.delenv("VOYAGE_API_KEY", raising=False)
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    emb_module._voyage_loaded = False
-    emb_module._voyage_client = None
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    emb_module._openrouter_loaded = False
+    emb_module._openrouter_client = None
     emb_module._fallback_warned = False
     yield
-    emb_module._voyage_loaded = False
-    emb_module._voyage_client = None
+    emb_module._openrouter_loaded = False
+    emb_module._openrouter_client = None
     emb_module._fallback_warned = False
 
 
