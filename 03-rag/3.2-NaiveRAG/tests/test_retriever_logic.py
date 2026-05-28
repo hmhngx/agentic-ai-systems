@@ -3,7 +3,7 @@
 The retriever sits between Qdrant and the LLM and applies three RAG-
 specific rules:
 
-  1. Drop any candidate with score < MIN_SCORE_THRESHOLD (0.40).
+  1. Drop any candidate with score < MIN_SCORE_THRESHOLD (default 0.25).
   2. Drop near-duplicate chunks (Jaccard > 0.95) on the same page.
   3. Return status='NO_RESULTS' when the filtered list is empty.
 
@@ -15,7 +15,7 @@ answer from parametric memory.
 
 The ONLY mocking allowed in the whole suite happens here: we patch
 ``src.retriever.search`` and ``src.retriever.embed_query`` so we can
-exercise the business logic without Qdrant or Voyage. Everything
+exercise the business logic without Qdrant or external embedding APIs. Everything
 else uses real implementations.
 """
 
@@ -29,10 +29,10 @@ from src.retriever import MIN_SCORE_THRESHOLD, retrieve
 
 
 def test_min_score_threshold_value() -> None:
-    """MIN_SCORE_THRESHOLD == 0.40 - empirically tuned floor for voyage-3."""
-    assert MIN_SCORE_THRESHOLD == 0.40, \
-        f"MIN_SCORE_THRESHOLD must be 0.40, got {MIN_SCORE_THRESHOLD}. " \
-        "Below 0.40 the retrieved chunk is unlikely to be semantically " \
+    """MIN_SCORE_THRESHOLD defaults to 0.25 for OpenRouter embeddings."""
+    assert MIN_SCORE_THRESHOLD == 0.25, \
+        f"MIN_SCORE_THRESHOLD must default to 0.25, got {MIN_SCORE_THRESHOLD}. " \
+        "Below 0.25 the retrieved chunk is unlikely to be semantically " \
         "related to the query - lowering the threshold lets noise into the " \
         "prompt and the LLM hallucinates from irrelevant context."
 
@@ -104,7 +104,7 @@ def test_retrieve_filters_below_threshold() -> None:
         {"text": "A above", "page_num": 1, "source_pdf": "f.pdf",
          "chunk_id": "1", "score": 0.85, "rank": 1},
         {"text": "B below", "page_num": 1, "source_pdf": "f.pdf",
-         "chunk_id": "2", "score": 0.35, "rank": 2},
+         "chunk_id": "2", "score": 0.20, "rank": 2},
         {"text": "C above", "page_num": 2, "source_pdf": "f.pdf",
          "chunk_id": "3", "score": 0.72, "rank": 3},
     ]
@@ -178,3 +178,143 @@ def test_retrieve_status_values_are_correct_strings(
     assert isinstance(status, str), \
         f"Status must be str, got {type(status).__name__}. " \
         "Non-string status breaks the if-comparison in naive_rag._answer_one."
+
+
+def test_retrieve_reranks_reference_like_chunks_lower() -> None:
+    """Reference-like chunks should be down-ranked behind body content."""
+    mock_client = MagicMock()
+    candidates = [
+        {
+            "text": "In Proceedings of the 47th International ACM SIGIR Conference.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r1",
+            "score": 0.33,
+            "rank": 1,
+        },
+        {
+            "text": "This paper introduces a benchmark for RAG robustness and analyzes temperature effects.",
+            "page_num": 1,
+            "source_pdf": "f.pdf",
+            "chunk_id": "b1",
+            "score": 0.30,
+            "rank": 2,
+        },
+    ]
+
+    with patch("src.retriever.search", return_value=candidates), \
+         patch("src.retriever.embed_query", return_value=np.zeros(1024, dtype=np.float32)):
+        results, status = retrieve(mock_client, "what is this paper about", top_k=5, quiet=True)
+
+    assert status == "OK"
+    assert results[0]["chunk_id"] == "b1", \
+        "Body content should outrank reference-like chunk after reranking."
+
+
+def test_retrieve_broad_query_boosts_early_page_body_chunk() -> None:
+    """Broad queries should prioritize page-1 body chunk over references."""
+    mock_client = MagicMock()
+    candidates = [
+        {
+            "text": "In Proceedings of the 47th International ACM SIGIR Conference. 2024.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r2",
+            "score": 0.31,
+            "rank": 1,
+        },
+        {
+            "text": "We approach the RAG LLM as a black box and quantify temperature effects.",
+            "page_num": 1,
+            "source_pdf": "f.pdf",
+            "chunk_id": "b2",
+            "score": 0.27,
+            "rank": 2,
+        },
+    ]
+    with patch("src.retriever.search", return_value=candidates), \
+         patch("src.retriever.embed_query", return_value=np.zeros(1024, dtype=np.float32)):
+        results, status = retrieve(mock_client, "summarize this paper", top_k=5, quiet=True)
+
+    assert status == "OK"
+    assert results[0]["chunk_id"] == "b2", \
+        "Page-1 body chunk should win on broad summary intents."
+
+
+def test_retrieve_broad_query_limits_reference_chunks() -> None:
+    """Broad overview queries should include at most one reference-like chunk."""
+    mock_client = MagicMock()
+    candidates = [
+        {
+            "text": "In Proceedings of the 47th International ACM SIGIR Conference. 2024.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r1",
+            "score": 0.36,
+            "rank": 1,
+        },
+        {
+            "text": "Findings of the Association for Computational Linguistics: EMNLP 2024.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r2",
+            "score": 0.35,
+            "rank": 2,
+        },
+        {
+            "text": "This paper introduces a benchmark and analyzes perturbation robustness.",
+            "page_num": 1,
+            "source_pdf": "f.pdf",
+            "chunk_id": "b1",
+            "score": 0.30,
+            "rank": 3,
+        },
+    ]
+    with patch("src.retriever.search", return_value=candidates), \
+         patch("src.retriever.embed_query", return_value=np.zeros(1024, dtype=np.float32)):
+        results, status = retrieve(mock_client, "what is this paper about", top_k=5, quiet=True)
+
+    assert status == "OK"
+    ref_ids = {"r1", "r2"}
+    kept_refs = [r for r in results if r["chunk_id"] in ref_ids]
+    assert len(kept_refs) <= 1, \
+        "Broad query should keep at most one reference-like chunk."
+
+
+def test_retrieve_reference_query_keeps_reference_chunks() -> None:
+    """Citation/reference queries should not suppress reference-like chunks."""
+    mock_client = MagicMock()
+    candidates = [
+        {
+            "text": "In Proceedings of the 47th International ACM SIGIR Conference. 2024.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r3",
+            "score": 0.31,
+            "rank": 1,
+        },
+        {
+            "text": "In Findings of the Association for Computational Linguistics: EMNLP 2024.",
+            "page_num": 10,
+            "source_pdf": "f.pdf",
+            "chunk_id": "r4",
+            "score": 0.30,
+            "rank": 2,
+        },
+        {
+            "text": "Body text about experimental design.",
+            "page_num": 2,
+            "source_pdf": "f.pdf",
+            "chunk_id": "b3",
+            "score": 0.29,
+            "rank": 3,
+        },
+    ]
+    with patch("src.retriever.search", return_value=candidates), \
+         patch("src.retriever.embed_query", return_value=np.zeros(1024, dtype=np.float32)):
+        results, status = retrieve(mock_client, "how many citations are there", top_k=5, quiet=True)
+
+    assert status == "OK"
+    top_ids = {r["chunk_id"] for r in results[:2]}
+    assert "r3" in top_ids or "r4" in top_ids, \
+        "Citation query should keep reference-like chunks near top."

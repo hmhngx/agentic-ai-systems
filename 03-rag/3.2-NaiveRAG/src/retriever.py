@@ -8,15 +8,19 @@ retriever.py handles RAG-specific logic:
   - no-results detection
   - result deduplication (same page, near-identical text)
 
-Design decision: minimum score threshold = 0.40.
-Below 0.40 cosine similarity, the retrieved chunk is unlikely to be
+Design decision: minimum score threshold defaults to 0.25.
+Below the threshold, the retrieved chunk is unlikely to be
 semantically related to the query. Returning low-confidence chunks
 causes the LLM to hallucinate by trying to construct an answer
 from irrelevant text. Better to return "no results" than low-quality results.
-This threshold was determined empirically on voyage-3 embeddings.
+This threshold should be tuned per embedding model and corpus and can
+be overridden with the ``MIN_SCORE_THRESHOLD`` environment variable.
 """
 
 from __future__ import annotations
+
+import os
+import re
 
 from qdrant_client import QdrantClient
 
@@ -24,13 +28,19 @@ from src.embedder import embed_query
 from src.vector_store import search
 
 
-MIN_SCORE_THRESHOLD: float = 0.40
+MIN_SCORE_THRESHOLD: float = float(os.environ.get("MIN_SCORE_THRESHOLD", "0.25"))
+REFERENCE_PENALTY: float = float(os.environ.get("REFERENCE_PENALTY", "0.08"))
+QUERY_AWARE_REFERENCE_PENALTY: float = float(
+    os.environ.get("QUERY_AWARE_REFERENCE_PENALTY", "0.18")
+)
+EARLY_PAGE_BOOST: float = float(os.environ.get("EARLY_PAGE_BOOST", "0.06"))
 
 # Jaccard token overlap above which we treat two chunks as duplicates.
 # 0.95 is intentionally aggressive - we only collapse near-identical
 # text from the same page (e.g. overlap regions between adjacent chunks).
 # Anything below 0.95 is treated as distinct context worth keeping.
 _DEDUP_OVERLAP_THRESHOLD: float = 0.95
+_YEAR_RE = re.compile(r"\b(19|20)\d{2}[a-z]?\b")
 
 
 def _jaccard(a: str, b: str) -> float:
@@ -78,6 +88,117 @@ def _deduplicate(results: list[dict]) -> list[dict]:
     return kept
 
 
+def _looks_reference_like(text: str) -> bool:
+    """Return True for bibliography/acknowledgment-heavy chunks.
+
+    This is a lightweight lexical heuristic used only for re-ranking.
+    It intentionally does not drop chunks outright: reference sections can
+    still be useful for specific queries about citations or funding.
+    """
+    low = text.lower()
+    signals: tuple[str, ...] = (
+        "references",
+        "bibliography",
+        "acknowledgment",
+        "acknowledgement",
+        "et al.",
+        "doi:",
+        "arxiv:",
+        "in proceedings of",
+        "findings of the association for computational linguistics",
+        "advances in neural information processing systems",
+        "association for computational linguistics",
+        "new york, ny, usa",
+    )
+    citation_like_years: int = len(_YEAR_RE.findall(low))
+    has_many_semicolons: bool = low.count(";") >= 3
+    # Author list heuristic: many commas plus years usually indicates refs.
+    author_list_like: bool = low.count(",") >= 6 and citation_like_years >= 2
+    return (
+        any(signal in low for signal in signals)
+        or has_many_semicolons
+        or author_list_like
+    )
+
+
+def _is_broad_intent_query(query: str) -> bool:
+    """Detect broad "paper overview" intents that need body chunks first."""
+    q = query.lower()
+    cues: tuple[str, ...] = (
+        "summary",
+        "summarize",
+        "abstract",
+        "main contribution",
+        "main contributions",
+        "what is this paper about",
+        "what is the paper about",
+        "paper about",
+        "main idea",
+    )
+    return any(cue in q for cue in cues)
+
+
+def _is_reference_intent_query(query: str) -> bool:
+    """Detect queries that explicitly ask about references/citations."""
+    q = query.lower()
+    cues: tuple[str, ...] = (
+        "citation",
+        "citations",
+        "reference",
+        "references",
+        "bibliography",
+        "works cited",
+    )
+    return any(cue in q for cue in cues)
+
+
+def _rerank_reference_noise(results: list[dict], query: str) -> list[dict]:
+    """Query-aware re-rank to reduce bibliography/reference dominance."""
+    broad_intent: bool = _is_broad_intent_query(query)
+    reference_intent: bool = _is_reference_intent_query(query)
+    rescored: list[dict] = []
+    for item in results:
+        adjusted_score: float = item["score"]
+        is_reference_like: bool = _looks_reference_like(item["text"])
+        if is_reference_like and not reference_intent:
+            penalty: float = QUERY_AWARE_REFERENCE_PENALTY if broad_intent else REFERENCE_PENALTY
+            adjusted_score -= penalty
+        if is_reference_like and reference_intent:
+            # If user explicitly asks about references/citations, reverse the
+            # suppression so those chunks stay near the top.
+            adjusted_score += REFERENCE_PENALTY
+        # For broad intents, favor early pages where title/abstract/intro
+        # usually live. This is a soft boost, not a hard filter.
+        if broad_intent and int(item.get("page_num", 0) or 0) <= 2:
+            adjusted_score += EARLY_PAGE_BOOST
+        enriched = dict(item)
+        enriched["_is_reference_like"] = is_reference_like
+        enriched["_adjusted_score"] = adjusted_score
+        rescored.append(enriched)
+
+    rescored.sort(key=lambda r: (r["_adjusted_score"], r["score"]), reverse=True)
+    if broad_intent and not reference_intent:
+        # Keep context diverse for overview questions: at most one
+        # reference-like chunk in the final top-k list.
+        kept: list[dict] = []
+        ref_kept: int = 0
+        for item in rescored:
+            if item["_is_reference_like"]:
+                if ref_kept >= 1:
+                    continue
+                ref_kept += 1
+            kept.append(item)
+            if len(kept) >= len(results):
+                break
+        rescored = kept
+
+    for rank, item in enumerate(rescored, start=1):
+        item["rank"] = rank
+        item.pop("_adjusted_score", None)
+        item.pop("_is_reference_like", None)
+    return rescored
+
+
 def retrieve(
     client: QdrantClient,
     query: str,
@@ -108,6 +229,7 @@ def retrieve(
     filtered: list[dict] = [r for r in raw_results if r["score"] >= MIN_SCORE_THRESHOLD]
 
     deduped: list[dict] = _deduplicate(filtered)
+    reranked: list[dict] = _rerank_reference_noise(deduped, query=query)
 
     if not quiet:
         # Diagnostic line so a user running with --debug (or just by default)
@@ -115,23 +237,23 @@ def retrieve(
         dropped_threshold: int = len(raw_results) - len(filtered)
         dropped_dup: int = len(filtered) - len(deduped)
         print(
-            f"Retrieved {len(deduped)} chunks "
+            f"Retrieved {len(reranked)} chunks "
             f"(after threshold={MIN_SCORE_THRESHOLD} filter, "
             f"dropped {dropped_threshold} below threshold, "
             f"{dropped_dup} duplicates)"
         )
-        if deduped:
-            top: dict = deduped[0]
+        if reranked:
+            top: dict = reranked[0]
             print(f"Top result: page {top['page_num']}, score {top['score']:.4f}")
 
-    if not deduped:
+    if not reranked:
         # The two empty paths (no Qdrant hits, all hits below threshold)
         # both collapse to NO_RESULTS - the caller treats them identically.
         return [], "NO_RESULTS"
 
     # Re-rank the deduped list 1..N so [Doc 1] in the prompt always
     # matches the order the LLM sees, even after we dropped duplicates.
-    for new_rank, result in enumerate(deduped, start=1):
+    for new_rank, result in enumerate(reranked, start=1):
         result["rank"] = new_rank
 
-    return deduped, "OK"
+    return reranked, "OK"
