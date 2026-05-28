@@ -1,15 +1,8 @@
 """
-embedder.py - Voyage-3 embeddings via voyageai SDK.
+embedder.py - OpenRouter embeddings via OpenAI-compatible API.
 
-Design decision: voyageai SDK is used directly, not via the Anthropic client,
-because the Anthropic Python SDK v0.25+ does not expose an .embeddings attribute.
-voyageai is Anthropic's preferred embedding provider and the API key can be
-the same Voyage AI key or a separate one.
-
-Design decision: input_type is a required parameter, not defaulted silently.
-Reason: using "document" for queries or "query" for documents degrades retrieval
-quality because voyage-3 optimizes embeddings differently for each role.
-Calling code must explicitly declare intent.
+Design decision: use OpenRouter's OpenAI-compatible endpoint so we can keep
+the provider wiring in one place and avoid vendor-specific SDK coupling.
 
 Design decision: vectors are L2-normalized before return.
 Reason: Qdrant COSINE distance auto-normalizes on insert, but normalizing
@@ -23,22 +16,21 @@ import os
 from typing import Optional
 
 import numpy as np
-import voyageai
+from openai import OpenAI
 
 
-EMBEDDING_MODEL: str = "voyage-3"
-EMBEDDING_DIM: int = 1024      # voyage-3 default output dimension
-BATCH_SIZE: int = 50           # conservative batch size; voyage-3 allows up to 128
-                               # but 50 stays within token limits for 300-token chunks
+EMBEDDING_MODEL: str = os.environ.get("OPENROUTER_EMBEDDING_MODEL", "openai/text-embedding-3-small")
+EMBEDDING_DIM: int = int(os.environ.get("OPENROUTER_EMBEDDING_DIM", "1536"))
+BATCH_SIZE: int = 50
 
 
-# Cache the voyageai client across calls so a single CLI invocation only
+# Cache the OpenRouter client across calls so a single CLI invocation only
 # pays for client construction (and any auth handshake) once.
-_voyage_client: "Optional[voyageai.Client]" = None
+_openrouter_client: Optional[OpenAI] = None
 
 
-def _get_client() -> voyageai.Client:
-    """Lazily construct a Voyage client from ``VOYAGE_API_KEY``.
+def _get_client() -> OpenAI:
+    """Lazily construct an OpenRouter client from ``OPENROUTER_API_KEY``.
 
     We intentionally do NOT silently fall back to a hash embedding here:
     this module is the production embedding path for the RAG pipeline,
@@ -47,18 +39,19 @@ def _get_client() -> voyageai.Client:
     caller can decide what to do (the CLI in ``naive_rag.py`` warns the
     user up front).
     """
-    global _voyage_client
-    if _voyage_client is not None:
-        return _voyage_client
+    global _openrouter_client
+    if _openrouter_client is not None:
+        return _openrouter_client
 
-    api_key: Optional[str] = os.environ.get("VOYAGE_API_KEY")
+    api_key: Optional[str] = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         raise RuntimeError(
-            "VOYAGE_API_KEY is not set. voyage-3 embeddings require a Voyage AI "
-            "API key. Add it to .env or export it in your shell, then retry."
+            "OPENROUTER_API_KEY is not set. OpenRouter embeddings require an API key. "
+            "Add it to .env or export it in your shell, then retry."
         )
-    _voyage_client = voyageai.Client(api_key=api_key)
-    return _voyage_client
+    base_url: str = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+    _openrouter_client = OpenAI(api_key=api_key, base_url=base_url)
+    return _openrouter_client
 
 
 def _normalize(vec: np.ndarray) -> np.ndarray:
@@ -84,20 +77,16 @@ def _normalize(vec: np.ndarray) -> np.ndarray:
 
 
 def embed_documents(texts: list[str]) -> np.ndarray:
-    """Embed corpus chunks. ``input_type="document"``.
+    """Embed corpus chunks.
 
     Returns a ``(len(texts), EMBEDDING_DIM)`` float32 array, L2-normalized.
 
-    Why ``input_type="document"``?
-        voyage-3 is asymmetric: documents and queries are routed to
-        slightly different output regions. The "document" mode optimizes
-        for the role of being retrievable; the "query" mode optimizes
-        for the role of doing the retrieving.
+    Uses OpenRouter's OpenAI-compatible embeddings endpoint.
     """
     if not texts:
         raise ValueError("embed_documents called with empty texts list")
 
-    client: voyageai.Client = _get_client()
+    client: OpenAI = _get_client()
     rows: list[list[float]] = []
     total_batches: int = (len(texts) + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -105,46 +94,40 @@ def embed_documents(texts: list[str]) -> np.ndarray:
         batch: list[str] = texts[start : start + BATCH_SIZE]
         print(f"Embedding batch {i}/{total_batches}...")
         try:
-            result = client.embed(
-                texts=batch,                  # up to BATCH_SIZE chunk strings per call
-                model=EMBEDDING_MODEL,        # voyage-3: 1024-dim general-purpose model
-                input_type="document",        # marks these as retrievable corpus chunks
+            result = client.embeddings.create(
+                model=EMBEDDING_MODEL,
+                input=batch,
             )
-        except Exception as exc:  # noqa: BLE001 - voyageai raises a tree of subclasses
+        except Exception as exc:  # noqa: BLE001 - SDK raises provider-specific subclasses
             # Re-raise with batch context so debugging a partial failure
             # tells you which batch broke and at what index range.
             raise RuntimeError(
                 f"embed_documents failed on batch {i}: {exc}"
             ) from exc
-        rows.extend(result.embeddings)
+        rows.extend([item.embedding for item in result.data])
 
     matrix: np.ndarray = np.asarray(rows, dtype=np.float32)
     return _normalize(matrix)
 
 
 def embed_query(text: str) -> np.ndarray:
-    """Embed a single user query. ``input_type="query"``.
+    """Embed a single user query.
 
     Returns a ``(EMBEDDING_DIM,)`` float32 array, L2-normalized.
 
-    Why ``input_type="query"``?
-        voyage-3 uses asymmetric embedding - queries and documents are
-        optimized for different distributions. Using "document" for a
-        query degrades recall because the query vector lands in the
-        wrong region of the embedding space.
+    Uses the same embedding model as document chunks.
     """
     if not text or not text.strip():
         raise ValueError("embed_query called with empty text")
 
-    client: voyageai.Client = _get_client()
+    client: OpenAI = _get_client()
     try:
-        result = client.embed(
-            texts=[text],                 # single query string wrapped in a list (SDK contract)
-            model=EMBEDDING_MODEL,        # same model as documents - asymmetry is via input_type
-            input_type="query",           # marks this as the lookup intent, not retrievable doc
+        result = client.embeddings.create(
+            model=EMBEDDING_MODEL,
+            input=[text],
         )
-    except Exception as exc:  # noqa: BLE001 - voyageai raises a tree of subclasses
+    except Exception as exc:  # noqa: BLE001 - SDK raises provider-specific subclasses
         raise RuntimeError(f"embed_query failed: {exc}") from exc
 
-    vec: np.ndarray = np.asarray(result.embeddings[0], dtype=np.float32)
+    vec: np.ndarray = np.asarray(result.data[0].embedding, dtype=np.float32)
     return _normalize(vec)

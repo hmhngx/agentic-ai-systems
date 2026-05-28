@@ -1,7 +1,7 @@
 """
 naive_rag.py - Day 4 deliverable: Naive RAG CLI over a PDF.
 
-Framework-free implementation. Raw Anthropic SDK only.
+Framework-free implementation. OpenRouter API (OpenAI-compatible) only.
 
 What this implements:
   The 6-step naive RAG loop from scratch:
@@ -76,7 +76,7 @@ def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="naive_rag",
         description=(
-            "Naive RAG CLI over a PDF. Raw Anthropic SDK + qdrant-client. "
+            "Naive RAG CLI over a PDF. OpenRouter API + qdrant-client. "
             "No orchestration framework wrappers."
         ),
     )
@@ -121,22 +121,21 @@ def _validate_environment(pdf_path: str) -> None:
     """Stage [1/5]: load .env and validate required keys + the PDF path."""
     load_dotenv()  # loads .env from the current working directory if present
 
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not os.environ.get("OPENROUTER_API_KEY"):
         print(
-            "ERROR: ANTHROPIC_API_KEY is not set. "
+            "ERROR: OPENROUTER_API_KEY is not set. "
             "Add it to .env or export it in your shell.",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    if not os.environ.get("VOYAGE_API_KEY"):
-        # voyage-3 is required for production-quality retrieval, but we
+    if not os.environ.get("OPENROUTER_EMBEDDING_MODEL"):
+        # A default embedding model is configured in src.embedder, but we
         # surface this as a warning rather than a hard exit so the user
-        # gets a clearer error from embedder.py if they continue.
+        # can still make the configuration explicit when desired.
         print(
-            "WARNING: VOYAGE_API_KEY is not set. "
-            "Embedding calls will fail at ingestion time. "
-            "Set it in .env to proceed.",
+            "WARNING: OPENROUTER_EMBEDDING_MODEL is not set. "
+            "Using default embedding model from src/embedder.py.",
             file=sys.stderr,
         )
 

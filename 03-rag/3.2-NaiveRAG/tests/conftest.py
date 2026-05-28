@@ -6,8 +6,8 @@ Fixtures are split into two tiers:
     ``low_score_results``) - session-scoped, fully offline.
   * Live-resource fixtures (``sample_pdf``, ``qdrant_client``,
     ``api_keys_present``) - either function-scoped or guarded by
-    ``pytest.skip`` so the offline tier still passes without Qdrant,
-    Voyage, or Anthropic credentials.
+    ``pytest.skip`` so the offline tier still passes without Qdrant
+    or OpenRouter credentials.
 
 All fixed UUIDs and scores are hardcoded for determinism: two test
 runs must produce identical bytes, so re-running on flake never
@@ -303,7 +303,7 @@ def _make_result(
 
 @pytest.fixture(scope="session")
 def sample_results() -> list[dict]:
-    """Three high-confidence results - all above MIN_SCORE_THRESHOLD = 0.40.
+    """Three high-confidence results - all above MIN_SCORE_THRESHOLD = 0.25.
 
     Scores 0.92 / 0.78 / 0.61 simulate a clean retrieval where the top
     result is a near-perfect match and the lowest is still confidently
@@ -325,8 +325,8 @@ def low_score_results() -> list[dict]:
     the LLM with status="OK" would be the textbook hallucination path.
     """
     return [
-        _make_result(_ML_TEXT_1,    1, "a1b2c3d4-0000-0000-0000-000000000001", 0.38, 1),
-        _make_result(_OCEAN_TEXT_1, 2, "a1b2c3d4-0000-0000-0000-000000000003", 0.31, 2),
+        _make_result(_ML_TEXT_1,    1, "a1b2c3d4-0000-0000-0000-000000000001", 0.24, 1),
+        _make_result(_OCEAN_TEXT_1, 2, "a1b2c3d4-0000-0000-0000-000000000003", 0.21, 2),
         _make_result(_COOK_TEXT_1,  3, "a1b2c3d4-0000-0000-0000-000000000005", 0.22, 3),
     ]
 
@@ -367,13 +367,9 @@ def qdrant_client() -> Iterator[object]:
 
 @pytest.fixture(scope="session")
 def api_keys_present() -> None:
-    """Skip the calling test when either Voyage or Anthropic keys are missing.
+    """Skip the calling test when OpenRouter key is missing.
 
-    Both keys are required end-to-end: Voyage powers the embedding step
-    and Anthropic powers the generation step. Half a key set means
-    half a pipeline, which would surface as a confusing partial failure.
+    OpenRouter powers both embedding and generation in this module.
     """
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        pytest.skip("ANTHROPIC_API_KEY not set - integration test skipped")
-    if not os.environ.get("VOYAGE_API_KEY"):
-        pytest.skip("VOYAGE_API_KEY not set - integration test skipped")
+    if not os.environ.get("OPENROUTER_API_KEY"):
+        pytest.skip("OPENROUTER_API_KEY not set - integration test skipped")

@@ -1,7 +1,7 @@
 """
-generator.py - Prompt construction and Claude API call.
+generator.py - Prompt construction and OpenRouter API call.
 
-Design decision: raw anthropic.Anthropic() client, zero framework wrappers.
+Design decision: OpenRouter OpenAI-compatible client, zero framework wrappers.
 This forces explicit control over every parameter passed to the API.
 
 Design decision: temperature=0.
@@ -16,20 +16,20 @@ Design decision: max_tokens=1024 for answers.
 Sufficient for detailed answers with inline citations.
 Prevents runaway generation that could mix topics.
 
-Design decision: model="claude-sonnet-4-20250514"
-Reason: Claude Sonnet 4 balances quality and cost for this use case.
-For production with strict latency requirements: claude-haiku-4-5-20251001.
-For maximum quality: claude-opus-4-0.
+Design decision: default model routed via OpenRouter.
+Reason: single API key and endpoint across providers.
 """
 
 from __future__ import annotations
 
-import anthropic
+import os
+
+from openai import APIError, OpenAI
 
 from src.citation import format_context_block, validate_citations
 
 
-MODEL: str = "claude-sonnet-4-20250514"
+MODEL: str = os.environ.get("OPENROUTER_CHAT_MODEL", "openai/gpt-4o-mini")
 MAX_TOKENS: int = 1024
 TEMPERATURE: int = 0      # MANDATORY for factual RAG - see docstring above. int 0 (not 0.0) for clarity.
 
@@ -104,18 +104,18 @@ def build_user_message(query: str, context_block: str) -> str:
 
 
 def generate_answer(query: str, results: list[dict]) -> tuple[str, list[str]]:
-    """Call Claude with the assembled prompt and return ``(answer, warnings)``.
+    """Call OpenRouter with the assembled prompt and return ``(answer, warnings)``.
 
     Steps:
         1. Format the context block from retrieved results.
         2. Build the system prompt (behavior contract).
         3. Build the user message (CONTEXT before QUERY).
-        4. Call ``anthropic.Anthropic().messages.create`` with deterministic
+        4. Call ``OpenAI(...).chat.completions.create`` with deterministic
            parameters (temperature=0).
-        5. Extract the answer text from ``response.content[0].text``.
+        5. Extract the answer text from ``response.choices[0].message.content``.
         6. Run citation validation against the original results list.
 
-    On ``anthropic.APIError`` we return a graceful error message instead
+    On ``openai.APIError`` we return a graceful error message instead
     of crashing - the CLI loop should survive a transient API hiccup so
     the user can retry without restarting ingestion.
     """
@@ -123,28 +123,29 @@ def generate_answer(query: str, results: list[dict]) -> tuple[str, list[str]]:
     system_prompt: str = build_system_prompt()
     user_message: str = build_user_message(query, context_block)
 
-    client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from environment
+    client = OpenAI(
+        api_key=os.environ.get("OPENROUTER_API_KEY"),
+        base_url=os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+    )
 
     try:
-        response = client.messages.create(
-            model=MODEL,                  # claude-sonnet-4-20250514: quality/cost balance for RAG
-            max_tokens=MAX_TOKENS,        # 1024: enough for detailed cited answers, caps runaway generation
-            temperature=TEMPERATURE,      # 0: deterministic top-token selection - mandatory for factual RAG
-            system=system_prompt,         # behavior contract (6 mandatory elements)
+        response = client.chat.completions.create(
+            model=MODEL,
+            max_tokens=MAX_TOKENS,
+            temperature=TEMPERATURE,
             messages=[
-                {"role": "user", "content": user_message},  # CONTEXT then QUERY, single turn
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
             ],
         )
-    except anthropic.APIError as exc:
+    except APIError as exc:
         # Specific exception class - never bare ``except``. We return the
         # error in the answer slot so the CLI displays it cleanly; an
         # empty warnings list keeps the citation-warning channel quiet.
-        error_message: str = f"I encountered an error calling the Claude API: {exc}"
+        error_message: str = f"I encountered an error calling the OpenRouter API: {exc}"
         return error_message, []
 
-    # response.content is a list of content blocks; for a plain text
-    # answer with no tool use it has exactly one TextBlock at index 0.
-    answer_text: str = response.content[0].text
+    answer_text: str = response.choices[0].message.content or ""
 
     warnings: list[str] = validate_citations(answer_text, results)
     return answer_text, warnings

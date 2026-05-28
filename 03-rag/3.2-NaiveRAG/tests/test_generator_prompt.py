@@ -1,6 +1,7 @@
 """Offline tests for ``src/generator.py``'s prompt construction.
 
-We do NOT call Claude here. The Anthropic API is mocked out by
+We do NOT call the live model API here.
+The network layer is avoided by
 simply never invoking ``generate_answer``; these tests only touch
 ``build_system_prompt``, ``build_user_message``, and the module-level
 constants.
@@ -178,16 +179,8 @@ def test_max_tokens_correct() -> None:
         "the model drift across topics once it runs out of grounded content."
 
 
-def test_model_is_claude_sonnet() -> None:
-    """Model identifier must be a Claude (Sonnet/Opus/Haiku) deployment."""
+def test_model_is_non_empty() -> None:
+    """Model identifier must be a non-empty OpenRouter model string."""
     from src.generator import MODEL
-    assert "claude" in MODEL.lower(), \
-        f"MODEL should be a Claude model, got {MODEL!r}. " \
-        "The Anthropic SDK is hardcoded - any other vendor breaks the API call."
-    assert (
-        "sonnet" in MODEL.lower()
-        or "opus" in MODEL.lower()
-        or "haiku" in MODEL.lower()
-    ), f"MODEL should pin a specific Claude tier (sonnet/opus/haiku), " \
-       f"got {MODEL!r}. A vague model id risks silent upgrades that " \
-       "change cost, latency, and hallucination behavior without notice."
+    assert isinstance(MODEL, str) and MODEL.strip(), \
+        f"MODEL should be a non-empty model id, got {MODEL!r}."

@@ -8,7 +8,7 @@ Two tiers:
     require no external services.
 
   * Two end-to-end tests (marked ``integration`` + ``slow``) actually
-    ingest a generated PDF and call Voyage + Anthropic. They auto-skip
+    ingest a generated PDF and call OpenRouter APIs. They auto-skip
     when Qdrant or API keys are unavailable.
 
 We launch the CLI via ``subprocess.run`` rather than calling ``main()``
@@ -17,8 +17,8 @@ command line - including argparse, ``sys.exit`` codes, and stdio
 encoding on Windows.
 
 Subprocess timeouts are generous (60s for argparse-only paths) because
-``naive_rag.py`` imports heavyweight SDKs (qdrant-client, voyageai,
-anthropic, pymupdf, tiktoken) at module level BEFORE argparse runs.
+``naive_rag.py`` imports heavyweight SDKs (qdrant-client, openai,
+pymupdf, tiktoken) at module level BEFORE argparse runs.
 On a cold Windows interpreter these imports can take 20-30 seconds.
 """
 
@@ -89,8 +89,7 @@ def test_cli_missing_api_key_exits_1(tmp_path: pathlib.Path) -> None:
     script's absolute path means cwd no longer needs to be NAIVE_RAG_DIR.
     """
     env = os.environ.copy()
-    env.pop("VOYAGE_API_KEY", None)
-    env.pop("ANTHROPIC_API_KEY", None)
+    env.pop("OPENROUTER_API_KEY", None)
     result = subprocess.run(
         [sys.executable, str(NAIVE_RAG_SCRIPT),
          "--pdf", "nonexistent.pdf", "--query", "test"],
@@ -106,8 +105,7 @@ def test_cli_missing_api_key_exits_1(tmp_path: pathlib.Path) -> None:
         "validation gate and may have leaked partial state."
     combined = (result.stdout + result.stderr).lower()
     assert (
-        "voyage_api_key" in combined
-        or "anthropic_api_key" in combined
+        "openrouter_api_key" in combined
         or "api key" in combined
         or "error" in combined
     ), f"Expected API-key error in output, got: " \
@@ -150,7 +148,7 @@ def test_cli_top_k_rejects_zero() -> None:
 
 
 # -----------------------------------------------------------------------------
-# Integration tests - require live Qdrant + Voyage + Anthropic
+# Integration tests - require live Qdrant + OpenRouter
 # -----------------------------------------------------------------------------
 
 
@@ -253,10 +251,10 @@ def test_cli_no_results_handled_gracefully(
            "Either we showed the user a confused/empty answer, or we " \
            "called the LLM with empty context (the hallucination path)."
         assert (
-            "claude" not in result.stderr.lower()
+            "openrouter" not in result.stderr.lower()
             or "api" not in result.stderr.lower()
             or "no relevant" in combined
-        ), "Suspected Claude API was called on NO_RESULTS - the CLI must " \
+        ), "Suspected OpenRouter API was called on NO_RESULTS - the CLI must " \
            "short-circuit BEFORE generation when retrieval returns nothing, " \
            "otherwise the LLM answers from parametric memory and hallucinates."
     finally:

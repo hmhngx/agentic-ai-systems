@@ -13,7 +13,7 @@ pipeline depends on:
     fallback would produce non-semantic vectors that look healthy at
     insert time but retrieve garbage at query time.
 
-No network calls. No VOYAGE_API_KEY required.
+No network calls. No OPENROUTER_API_KEY required.
 """
 
 from __future__ import annotations
@@ -27,17 +27,15 @@ import numpy as np
 def test_constants_correct() -> None:
     """Model/dim/batch constants must match the rest of the pipeline."""
     from src.embedder import BATCH_SIZE, EMBEDDING_DIM, EMBEDDING_MODEL
-    assert EMBEDDING_MODEL == "voyage-3", \
-        f"EMBEDDING_MODEL must be 'voyage-3', got {EMBEDDING_MODEL!r}. " \
-        "Other Voyage models output different dims and the Qdrant " \
-        "collection is configured for 1024 - mismatch = unusable index."
-    assert EMBEDDING_DIM == 1024, \
-        f"EMBEDDING_DIM must be 1024 (voyage-3 default), got {EMBEDDING_DIM}. " \
+    assert isinstance(EMBEDDING_MODEL, str) and EMBEDDING_MODEL, \
+        f"EMBEDDING_MODEL must be a non-empty string, got {EMBEDDING_MODEL!r}."
+    assert EMBEDDING_DIM == 1536, \
+        f"EMBEDDING_DIM must be 1536 (text-embedding-3-small default), got {EMBEDDING_DIM}. " \
         "Any drift here means create_collection builds a wrong-size index " \
         "and every upsert is rejected by Qdrant."
     assert BATCH_SIZE == 50, \
         f"BATCH_SIZE must be 50, got {BATCH_SIZE}. " \
-        "Larger batches exceed Voyage's token budget for 300-token chunks; " \
+        "Larger batches increase request size and can hurt reliability; " \
         "smaller batches multiply API calls and slow ingest unnecessarily."
 
 
@@ -123,7 +121,7 @@ def test_no_fallback_hash_in_embedder() -> None:
     source = src_path.read_text(encoding="utf-8")
     assert "hashlib" not in source, \
         "embedder.py imports hashlib - a hash fallback embeds text into " \
-        "non-semantic space. The Voyage path must be mandatory (Answer B)."
+        "non-semantic space. The embedding API path must be mandatory."
     assert "blake2" not in source, \
         "embedder.py references blake2 - any hash fallback breaks RAG: " \
         "the index looks healthy but every query returns nonsense."
