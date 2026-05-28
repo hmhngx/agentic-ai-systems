@@ -1,10 +1,12 @@
 # 01 - Embeddings
 
-## Output
+## Results
+
 ![alt text](results/image.png)
 ![alt text](<results/image copy.png>)
 ![alt text](<results/image copy 2.png>)
 ![alt text](results/heatmap.png)
+
 
 ## What this module shows
 
@@ -27,21 +29,23 @@ The script is meant to make the following ideas concrete:
 5. Renders a heatmap to `heatmap.png`.
 6. Prints a report that checks whether the nearest pairs stay within the same semantic group.
 
-If `VOYAGE_API_KEY` or `ANTHROPIC_API_KEY` is available, the script uses Voyage-3 embeddings at 1024 dimensions.
+If `OPENROUTER_API_KEY` is available, the script uses the OpenRouter embedding model configured in `OPENROUTER_EMBEDDING_MODEL`.
 If no key is available, it falls back to a local deterministic embedding path so the demo still runs and produces the same style of clustering.
 
 ## Concepts learned from the code
 
-| Concept | What it means in this demo | Why it matters |
-|---------|----------------------------|-----------------|
-| Dense embeddings | Each sentence becomes a 1024-dimensional float vector | Meaning is distributed across many dimensions instead of a few keywords |
-| One model, one space | All sentences are embedded with the same provider and dimension setting | Similarity scores are only valid inside the same vector space |
-| Cosine similarity | Dot product of row-normalized vectors | Measures semantic direction while ignoring vector length |
-| High-dimensional geometry | A vector is a point in semantic space, not a single feature | Small angle differences can represent meaning differences |
-| Topic clustering | Similar sentences produce darker blocks on the heatmap diagonal | Gives a visual sanity check that the embedding space is coherent |
-| Batch inference | All 20 sentences are embedded in one call | Faster and simpler than one request per sentence |
-| Query/document roles | The remote path uses `input_type="document"` | Embedding models often behave differently for corpus items and queries |
-| Fallback behavior | Local embeddings are used when no API key is configured | The example remains runnable in a clean local environment |
+
+| Concept                   | What it means in this demo                                              | Why it matters                                                          |
+| ------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Dense embeddings          | Each sentence becomes a dense float vector (default 1536 dimensions)    | Meaning is distributed across many dimensions instead of a few keywords |
+| One model, one space      | All sentences are embedded with the same provider and dimension setting | Similarity scores are only valid inside the same vector space           |
+| Cosine similarity         | Dot product of row-normalized vectors                                   | Measures semantic direction while ignoring vector length                |
+| High-dimensional geometry | A vector is a point in semantic space, not a single feature             | Small angle differences can represent meaning differences               |
+| Topic clustering          | Similar sentences produce darker blocks on the heatmap diagonal         | Gives a visual sanity check that the embedding space is coherent        |
+| Batch inference           | All 20 sentences are embedded in one call                               | Faster and simpler than one request per sentence                        |
+| Query/document roles      | The remote path uses `input_type="document"`                            | Embedding models often behave differently for corpus items and queries  |
+| Fallback behavior         | Local embeddings are used when no API key is configured                 | The example remains runnable in a clean local environment               |
+
 
 ## Code path worth understanding
 
@@ -58,10 +62,10 @@ If no key is available, it falls back to a local deterministic embedding path so
 python embedding_explorer.py
 ```
 
-To use the remote Voyage path instead of the local fallback:
+To use the remote OpenRouter path instead of the local fallback:
 
 ```powershell
-$env:VOYAGE_API_KEY="your-key-here"
+$env:OPENROUTER_API_KEY="your-key-here"
 python embedding_explorer.py
 ```
 
@@ -102,4 +106,5 @@ The README is intentionally aligned to the demo in [embedding_explorer.py](embed
 - Dense vs sparse vectors
 - Same-model constraint for queries and documents
 - Embedding dimensions and model-dependent vector length
-- Voyage-3 as the remote embedding path used by the script
+- OpenRouter embeddings as the remote embedding path used by the script
+

@@ -10,7 +10,7 @@ What this script proves:
   5. Dense embeddings cluster visibly by topic in a heatmap.
 
 Run:
-  ANTHROPIC_API_KEY=<your-key> python embedding_explorer.py
+  OPENROUTER_API_KEY=<your-key> python embedding_explorer.py
 """
 
 import os
@@ -24,14 +24,15 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import argparse
 
-# voyageai is optional for the fallback mode; import safely.
+# OpenAI SDK (used with OpenRouter's OpenAI-compatible endpoint) is optional
+# for fallback mode; import safely.
 try:
-  import voyageai
+  from openai import OpenAI
 except Exception:  # ImportError or other runtime errors from missing SDK
-  voyageai = None
+  OpenAI = None
 
-EMBEDDING_PROVIDER = "voyage-3"
-EMBEDDING_DIMENSION = 1024
+EMBEDDING_PROVIDER = "openrouter"
+EMBEDDING_DIMENSION = int(os.environ.get("OPENROUTER_EMBEDDING_DIM", "1536"))
 
 TOPIC_HINTS = {
   "topic_dogs": {
@@ -183,17 +184,16 @@ def _compute_group_starts(group_size: int) -> list[int]:
 GROUP_STARTS = _compute_group_starts(GROUP_SIZE)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SECTION 2 — embedding via Anthropic / voyage-3
+# SECTION 2 — embedding via OpenRouter
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_embeddings(sentences: list[str], use_local: bool = False) -> np.ndarray:
     """
-    Call the Anthropic embeddings endpoint and return a (N, D) float32 array.
+    Call OpenRouter's OpenAI-compatible embeddings endpoint and return a
+    (N, D) float32 array.
 
-    Model: voyage-3
-      - Default dimension: 1024
-      - Context: 32,000 tokens
-      - Voyage AI is Anthropic's preferred embedding provider.
+    Model: OPENROUTER_EMBEDDING_MODEL (default openai/text-embedding-3-small)
+      - Default dimension: OPENROUTER_EMBEDDING_DIM (1536)
 
     Why batch in one call?
       - The API accepts a list of strings.
@@ -201,12 +201,12 @@ def get_embeddings(sentences: list[str], use_local: bool = False) -> np.ndarray:
       - Rate limit: governed by total tokens, not request count.
 
     Returns:
-      np.ndarray of shape (20, 1024), dtype float32.
+      np.ndarray of shape (20, EMBEDDING_DIMENSION), dtype float32.
       Row i is the embedding for sentences[i].
     """
     global EMBEDDING_PROVIDER
 
-    api_key = os.environ.get("VOYAGE_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
+    api_key = os.environ.get("OPENROUTER_API_KEY")
 
     # Force local fallback if requested explicitly.
     if use_local:
@@ -222,25 +222,28 @@ def get_embeddings(sentences: list[str], use_local: bool = False) -> np.ndarray:
       return embeddings
 
     # If the SDK wasn't imported, fall back (useful in minimal environments).
-    if voyageai is None:
-      print("  VoyageAI SDK not available; falling back to local embeddings.")
+    if OpenAI is None:
+      print("  OpenAI SDK not available; falling back to local embeddings.")
       EMBEDDING_PROVIDER = "local fallback"
       return _local_topic_embeddings(sentences)
 
-    EMBEDDING_PROVIDER = "voyage-3"
+    EMBEDDING_PROVIDER = "openrouter"
 
-    # voyageai.Client is the direct SDK for Voyage AI — Anthropic's preferred
-    # embedding provider. In production you use your Voyage AI API key here.
-    client = voyageai.Client(api_key=api_key)
+    embedding_model = os.environ.get(
+      "OPENROUTER_EMBEDDING_MODEL",
+      "openai/text-embedding-3-small",
+    )
+    base_url = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+    client = OpenAI(api_key=api_key, base_url=base_url)
 
-    print(f"  Sending {len(sentences)} sentences to voyage-3...")
+    print(f"  Sending {len(sentences)} sentences to {embedding_model} via OpenRouter...")
     t0 = time.perf_counter()
 
     try:
-      result = client.embed(
-        texts=sentences,
-        model="voyage-3",
-        input_type="document",
+      result = client.embeddings.create(
+        input=sentences,
+        model=embedding_model,
+        extra_body={"input_type": "document"},
       )
     except Exception as e:
       print(f"  Embedding API call failed: {e}")
@@ -251,8 +254,7 @@ def get_embeddings(sentences: list[str], use_local: bool = False) -> np.ndarray:
     elapsed = time.perf_counter() - t0
     print(f"  API call completed in {elapsed:.2f}s")
 
-    # result.embeddings is a list of list[float], one per input sentence.
-    embeddings = np.array(result.embeddings, dtype=np.float32)
+    embeddings = np.array([item.embedding for item in result.data], dtype=np.float32)
 
     print(f"  Embedding matrix shape: {embeddings.shape}")
     print(f"  Each vector has {embeddings.shape[1]} dimensions.")
