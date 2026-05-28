@@ -37,7 +37,7 @@ Research Agent is an autonomous research system powered by LangGraph that takes 
 | Layer | Tool | Why this tool |
 |-------|------|---------------|
 | Orchestration | LangGraph | Explicit state machine with checkpointing and conditional routing |
-| LLM | Anthropic SDK (Claude) | Strong reasoning for planning, critique, and synthesis |
+| LLM | OpenRouter (OpenAI-compatible) | Strong reasoning for planning, critique, and synthesis |
 | Web search | Tavily API | Purpose-built search API for LLM agents with structured results |
 | HTML parsing | BeautifulSoup4 | Extracts clean text from scraped web pages |
 | Schema validation | Pydantic v2 | Structured report output with field validation |
@@ -62,7 +62,7 @@ copy ..\..\.env.example .env
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-# Set TAVILY_API_KEY and ANTHROPIC_API_KEY in .env
+# Set TAVILY_API_KEY and OPENROUTER_API_KEY in .env
 python main.py --topic "Compare vector databases for RAG in 2026"
 ```
 

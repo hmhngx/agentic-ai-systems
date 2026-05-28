@@ -22,7 +22,7 @@ Doc Agent is a local-first document understanding system that indexes files on y
                                           [MCP Server (stdio)]
                                                   |
                                                   v  (tool calls)
-                                          [Claude Agent (Anthropic SDK)]
+                                          [LLM Agent (OpenRouter)]
                                                   |
                                                   v
                                           [Answer to user]
@@ -38,7 +38,7 @@ Doc Agent is a local-first document understanding system that indexes files on y
 | Embeddings | Voyage-3 via API | Highest measured MRR on technical document corpora |
 | Vector store | sqlite-vec | Embedded vector search with zero external dependencies |
 | Agent protocol | MCP SDK (TypeScript) | Standard interface compatible with Claude Desktop and Cursor |
-| LLM | Anthropic SDK (Claude) | Tool use, long context, structured outputs |
+| LLM | OpenRouter (OpenAI-compatible) | Tool use, long context, structured outputs |
 
 ## Milestones
 
@@ -56,7 +56,7 @@ Doc Agent is a local-first document understanding system that indexes files on y
 ```powershell
 cd projects\doc-agent
 copy ..\..\.env.example .env
-# Set ANTHROPIC_API_KEY in .env
+# Set OPENROUTER_API_KEY in .env
 npm install
 npm run build
 npm run index -- --dir C:\path\to\your\documents

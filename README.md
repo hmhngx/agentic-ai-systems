@@ -8,7 +8,7 @@ I built this repository as a structured, implementation-first learning record do
 |------|---------|---------|
 | Python | Core ML/RAG pipelines, agents, evaluation | 02–08, research-agent, capstone |
 | TypeScript | Local-first doc agent, MCP server | doc-agent |
-| Anthropic SDK | LLM inference, tool use, structured outputs | 04-agents-mcp, doc-agent, capstone |
+| OpenRouter (OpenAI-compatible) | LLM inference + embeddings via a single API key | 03-rag, doc-agent, research-agent, capstone |
 | LangGraph | Stateful agent workflows, checkpointing, multi-agent routing | 05-agentic-systems, research-agent |
 | Qdrant | Production vector store with hybrid search | 03-rag, capstone |
 | sqlite-vec | Embedded vector search for local-first agents | doc-agent |
@@ -70,7 +70,7 @@ agentic-ai-systems/
 
 ## Environment
 
-Copy `.env.example` to `.env` and set `ANTHROPIC_API_KEY` (and other keys per module) before running any project or pipeline.
+Copy `.env.example` to `.env` and set `OPENROUTER_API_KEY` (and other keys per module) before running any project or pipeline.
 
 ## Contact
 
