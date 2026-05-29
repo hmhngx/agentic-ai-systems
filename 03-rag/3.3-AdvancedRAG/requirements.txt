@@ -1,0 +1,40 @@
+# Day 5 - Advanced RAG (Hybrid Search + Reranking)
+# Raw SDKs only (no RAG orchestration frameworks).
+#
+# Prerequisite: Day 3 Qdrant must be running:
+#   docker run -d -p 6333:6333 qdrant/qdrant
+# Prerequisite: Day 3 corpus generator must be reachable at
+#   03-rag/3.1-VectorDBs/src/corpus.py (re-used via sys.path bridge).
+
+qdrant-client>=1.9.0
+# qdrant-client: official Qdrant Python SDK. Same version family as Day 3 so
+# query_points / SearchParams / Filter signatures stay identical.
+
+rank-bm25>=0.2.2
+# rank-bm25: pure-Python BM25 family. We use BM25Okapi (the canonical
+# variant) with k1=1.5, b=0.75 library defaults - documented in
+# bm25_retriever.py.
+
+cohere>=5.0.0
+# cohere: cross-encoder reranker via the Cohere Rerank API
+# (model = rerank-v3.5). Production-grade alternative to running a
+# 300MB+ sentence-transformers CrossEncoder locally.
+
+openai>=1.40.0
+# openai: OpenAI-compatible client used to call OpenRouter's embeddings
+# endpoint. Re-used transitively through 03-rag/3.2-NaiveRAG/src/embedder.py
+# so the embedding model and L2-normalization match the Day 3 collection
+# exactly.
+
+numpy>=1.26.0
+# numpy: numerical primitives (argsort for BM25 ranking, percentile for
+# p50/p95 latency, deterministic seeding for the corpus fallback).
+
+python-dotenv>=1.0.0
+# python-dotenv: loads .env so OPENROUTER_API_KEY / COHERE_API_KEY /
+# QDRANT_URL / COLLECTION_NAME are read the same way Day 3 and Day 4
+# already use them.
+
+pytest>=8.0.0
+# pytest: offline unit suite under tests/ (see README). Integration
+# tests auto-skip when Qdrant or API keys are unavailable.
