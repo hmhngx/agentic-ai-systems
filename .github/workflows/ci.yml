@@ -1,17 +1,19 @@
-name: 02-chunking CI
+name: Module CI
 
 on:
   push:
     paths:
       - "02-chunking/**"
+      - "03-rag/3.4-OCR/**"
       - ".github/workflows/ci.yml"
   pull_request:
     paths:
       - "02-chunking/**"
+      - "03-rag/3.4-OCR/**"
       - ".github/workflows/ci.yml"
 
 jobs:
-  test:
+  chunking:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -62,3 +64,32 @@ jobs:
 
       - name: Coverage
         run: make test-cov
+
+  ocr-ingest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 03-rag/3.4-OCR
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-34-ocr-${{ hashFiles('03-rag/3.4-OCR/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Offline tests
+        run: python -m pytest tests/ -v -m "not integration"

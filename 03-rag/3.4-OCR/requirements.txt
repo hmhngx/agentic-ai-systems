@@ -1,0 +1,28 @@
+# Zero LangChain. Zero LlamaIndex.
+# Docling: IBM Research document understanding pipeline
+# qdrant-client: vector database
+# pdfplumber: fallback for born-digital PDFs when Docling fails
+# pymupdf: PDF rendering and page-level analysis
+
+docling>=2.0.0
+qdrant-client>=1.9.0
+pdfplumber>=0.11.0
+pymupdf>=1.24.0
+numpy>=1.26.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+requests>=2.31.0
+
+# One of these for embeddings (prefer voyageai if key available):
+voyageai>=0.2.0
+# openai>=1.0.0  # uncomment if using OpenRouter with openai SDK
+
+# Test PDF generation (scripts/generate_test_pdfs.py).
+# Not part of the runtime pipeline; only needed to synthesize sample PDFs.
+reportlab>=4.0.0
+
+# Notes:
+# Docling downloads model weights on first run (~500MB).
+# Set HF_HOME env var to control cache location.
+# First run takes 2-5 minutes. Subsequent runs are fast.
+# GPU is optional — Docling runs on CPU, just slower.

@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+pytest-cache-files-*/
+.hf_cache/
+test_*.txt
+*_proof.txt
+pipeline_output.txt
+heading_proof.txt
+table_retrieval_proof.txt
