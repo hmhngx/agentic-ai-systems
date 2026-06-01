@@ -1,0 +1,12 @@
+# Zero LangChain. Zero LangGraph. Zero openai SDK.
+# Raw HTTP + Pydantic only.
+
+pydantic>=2.0.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+pytest>=8.0.0
+duckduckgo-search>=6.3.0
+
+# pydantic: tool input schema validation — NOT just asking for JSON
+# requests: raw HTTP calls to OpenRouter API
+# No openai SDK — we build HTTP requests ourselves to see exactly what is sent
