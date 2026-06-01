@@ -1,0 +1,15 @@
+{
+  "$comment": "Cursor reads project-scoped MCP servers from <workspace>/.cursor/mcp.json. Copy the 'agent-tools' block into the .cursor/mcp.json at the folder you open as your Cursor workspace (e.g. the repo root), or merge it into your global ~/.cursor/mcp.json. Run `npm run build` first so dist/index.js exists.",
+  "mcpServers": {
+    "agent-tools": {
+      "command": "node",
+      "args": [
+        "C:/Users/minhh/Side Hustles/agentic-ai-systems/04-agents/4.2-MCP-Server/dist/index.js"
+      ],
+      "env": {
+        "MCP_DB_PATH": "C:/Users/minhh/Side Hustles/agentic-ai-systems/04-agents/4.2-MCP-Server/data/agent.db",
+        "MCP_FILE_ROOT": "C:/Users/minhh/Side Hustles/agentic-ai-systems/04-agents/4.2-MCP-Server"
+      }
+    }
+  }
+}

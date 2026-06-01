@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+
+# Generated SQLite database (recreate with `npm run seed`)
+data/*.db
+data/*.db-shm
+data/*.db-wal
