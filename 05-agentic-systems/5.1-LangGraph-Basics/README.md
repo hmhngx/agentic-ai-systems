@@ -16,10 +16,15 @@ python langgraph_basics.py
 ```
 
 ## Results
-![alt text](results/lang1.png)
-![alt text](results/lang2.png)
-![alt text](results/lang3.png)
-![alt text](results/lang4.png)
+
+The run prints the compiled graph (ASCII + Mermaid), a per-field state diff for
+each of three inputs, the same graph under `.stream()`, and the checkpoint
+accumulation proof:
+
+![Compiled graph rendered as ASCII and Mermaid](results/lang1.png)
+![State diff for the first invoke — fields before → after](results/lang2.png)
+![Conditional routing across the three demo inputs](results/lang3.png)
+![Checkpoint persistence — trace grows 3 → 6 on the same thread](results/lang4.png)
 
 ---
 
@@ -136,4 +141,9 @@ state diffs are reproducible run to run.
 | `test_langgraph_basics.py` | 28 tests proving every goal (G1–G6) + the 3 "common mistakes" (purity, missing thread_id, reducer). Run `python -m pytest -v` |
 | `requirements.txt` | pinned deps (langgraph, langchain-openai, pydantic, typing_extensions, grandalf, pytest) |
 | `.env.example` | optional OpenRouter config for `USE_LLM=1` |
+| `results/` | screenshots of the run (graph, state diffs, checkpoint proof) |
 | `graph.mmd` | Mermaid source written at runtime (git-ignored) |
+
+---
+
+<sub>↑ [Module 05 — Agentic Systems](../README.md) · → [Day 9 — Multi-Agent Research](../5.2-Multi-Agent-Research/README.md)</sub>

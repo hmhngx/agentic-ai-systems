@@ -2,7 +2,9 @@
 
 ## Objective
 
-This module covers multi-step agent orchestration with LangGraph—state machines, directed acyclic graphs, checkpointing, multi-agent routing, Reflexion loops, and human-in-the-loop gates. After completing this module, you will be able to design agent workflows as explicit graphs with typed state, persist and resume execution across failures, route tasks between specialized sub-agents, and implement self-correction loops that improve output quality without human intervention.
+This module covers multi-step agent orchestration with LangGraph—state machines, directed graphs *with cycles*, checkpointing, multi-agent routing, Reflexion loops, and human-in-the-loop gates. After completing this module, you will be able to design agent workflows as explicit graphs with typed state, persist and resume execution across failures, route tasks between specialized sub-agents, and implement self-correction loops that improve output quality without human intervention.
+
+> **Each day is a self-contained folder** (`5.x-Name/`) with its own `README.md`, runnable script, pinned `requirements.txt`, machine-checked test suite, and `.env.example`. Every artifact **runs fully offline and deterministically by default** (mock LLM/search), so the graphs, logs, and failure paths are reproducible without API keys or spend. To run one: `cd` into its folder, create a venv, `pip install -r requirements.txt`, then run the script or `python -m pytest -v`.
 
 ## Core concepts
 
@@ -16,31 +18,38 @@ This module covers multi-step agent orchestration with LangGraph—state machine
 
 ## Implementation artifacts
 
-| File | Description | Status |
-|------|-------------|--------|
-| [`5.1-LangGraph-Basics/langgraph_basics.py`](5.1-LangGraph-Basics/langgraph_basics.py) | 2-node StateGraph (`input → processor`) with typed state, a conditional edge, MemorySaver checkpointing, ASCII/Mermaid visualization, and per-input state diffs | ✅ Done |
-| `langgraph_workflow.py` | Core StateGraph with typed state, conditional edges, and node functions | 🔲 Pending |
-| `checkpoint_store.py` | SqliteSaver checkpoint persistence with resume-from-interrupt | 🔲 Pending |
-| `multi_agent_router.py` | Supervisor agent routing tasks to Researcher, Writer, and Critic sub-agents | 🔲 Pending |
-| `reflexion_loop.py` | Generate-critique-revise loop with episodic memory of past failures | 🔲 Pending |
-| `hitl_gate.py` | Interrupt-before-node pattern with approval/rejection routing | 🔲 Pending |
+| Day | Artifact | What it demonstrates | Status |
+|-----|----------|----------------------|--------|
+| 8 | [`5.1-LangGraph-Basics/`](5.1-LangGraph-Basics/README.md) | 2-node StateGraph (`input → processor`) with typed state, a conditional edge, MemorySaver checkpointing, ASCII/Mermaid visualization, and per-input state diffs | ✅ Done |
+| 9 | [`5.2-Multi-Agent-Research/`](5.2-Multi-Agent-Research/README.md) | 3-agent pipeline (`planner → researcher → writer`) in one graph: structured-JSON plan, Tavily/mock search, accumulating findings, a self-looping researcher with a `max_iterations` guard, and graceful no-results failure | ✅ Done |
+| 10 | `5.3-Checkpointing-HITL/` *(planned)* | Durable persistence (SqliteSaver) with `interrupt_before` approval gates and resume-from-interrupt | 🔲 Planned |
+| 11 | `5.4-Supervisor-Agents/` *(planned)* | Supervisor/star topology: a router LLM delegating to specialized worker agents that report back | 🔲 Planned |
+| 12 | `5.5-Reflexion-Loop/` *(planned)* | Generate → critique → revise loop with episodic memory of past failures | 🔲 Planned |
 
 ## Key decisions & tradeoffs
 
-- LangGraph StateGraph will be used over LangChain AgentExecutor for all multi-step workflows—explicit graph topology enables unit testing of individual nodes.
-- SqliteSaver will be the default checkpoint backend for local development; PostgresSaver will be documented for production deployments requiring concurrent access.
-- The supervisor routing pattern will use structured output classification rather than free-text routing to eliminate misrouting on ambiguous inputs.
-- Reflexion loops will cap at 3 revision attempts; the best-scoring output across attempts will be returned rather than the last attempt.
-- HITL gates will be placed exclusively before nodes with external side effects (API calls, file writes)—not before read-only retrieval or generation steps.
+**Decisions made so far (5.1–5.2):**
 
-## Evaluation
+- **StateGraph over LangChain `AgentExecutor`** for every workflow — explicit graph topology makes individual nodes unit-testable and the control flow inspectable.
+- **`MemorySaver` as the checkpoint backend** for these foundational days (in-process, zero setup). Durable `SqliteSaver`/`PostgresSaver` is deferred to the persistence day (5.3).
+- **Offline, deterministic by default.** Each artifact mocks the LLM and web search unless real keys are provided, so graphs, logs, and graceful-failure paths are reproducible and testable without spend.
+- **Structured outputs validated with pydantic** (with a repair-retry + fallback), rather than trusting raw model JSON.
+- **Day 9 uses a linear `Planner → Researcher → Writer` pipeline** (fixed task order) instead of the supervisor pattern; the supervisor/dynamic-routing approach is the subject of 5.4.
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Task completion rate (multi-step workflows) | ≥ 90% | |
-| Checkpoint recovery success rate | 100% | |
-| Reflexion quality improvement (critic score delta) | ≥ +0.15 | |
-| HITL gate response latency (human approval) | ≤ 30s p95 | |
+**Forward-looking (planned days):**
+
+- The supervisor routing pattern will use structured-output classification rather than free-text routing to eliminate misrouting on ambiguous inputs.
+- Reflexion loops will cap at a fixed number of revision attempts and return the best-scoring output across attempts, not the last one.
+- HITL gates will sit exclusively before nodes with external side effects (API calls, file writes), never before read-only retrieval or generation.
+
+## Verification
+
+Every delivered artifact ships a machine-checked test suite in which each Day goal maps to an explicit assertion. Run a day's suite from its folder with `python -m pytest -v`.
+
+| Artifact | Tests | Coverage |
+|----------|-------|----------|
+| 5.1 — LangGraph basics | 28 passing | all Day-8 goals + the 3 "common mistakes" (node purity, missing `thread_id`, reducer semantics) |
+| 5.2 — Multi-agent research | 32 passing | all Day-9 goals/tasks/concepts incl. graceful failure under a live search backend |
 
 ## References
 
