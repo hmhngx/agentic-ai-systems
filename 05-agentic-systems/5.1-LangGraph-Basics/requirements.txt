@@ -1,0 +1,13 @@
+# Day 8 — LangGraph state-machine basics.
+#
+# The core demo runs FULLY OFFLINE and deterministically — no API key required.
+# The optional LLM-backed sentiment path uses OpenRouter via langchain-openai.
+
+langgraph>=0.2.50          # StateGraph, START/END, MemorySaver checkpointing
+langchain-core>=0.3.0      # message types used by the optional LLM node
+langchain-openai>=0.2.0    # ChatOpenAI pointed at OpenRouter base_url (optional LLM path)
+pydantic>=2.7.0            # runtime validation of raw input -> typed GraphInput
+typing_extensions>=4.11.0  # TypedDict + Annotated reducers (recommended over stdlib typing)
+python-dotenv>=1.0.0       # load OPENROUTER_* from .env
+grandalf>=0.8             # ASCII graph rendering for .get_graph().draw_ascii()
+pytest>=8.0.0             # machine-checked validation of every goal (test_langgraph_basics.py)

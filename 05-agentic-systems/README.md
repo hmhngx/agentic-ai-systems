@@ -18,6 +18,7 @@ This module covers multi-step agent orchestration with LangGraph—state machine
 
 | File | Description | Status |
 |------|-------------|--------|
+| [`5.1-LangGraph-Basics/langgraph_basics.py`](5.1-LangGraph-Basics/langgraph_basics.py) | 2-node StateGraph (`input → processor`) with typed state, a conditional edge, MemorySaver checkpointing, ASCII/Mermaid visualization, and per-input state diffs | ✅ Done |
 | `langgraph_workflow.py` | Core StateGraph with typed state, conditional edges, and node functions | 🔲 Pending |
 | `checkpoint_store.py` | SqliteSaver checkpoint persistence with resume-from-interrupt | 🔲 Pending |
 | `multi_agent_router.py` | Supervisor agent routing tasks to Researcher, Writer, and Critic sub-agents | 🔲 Pending |
