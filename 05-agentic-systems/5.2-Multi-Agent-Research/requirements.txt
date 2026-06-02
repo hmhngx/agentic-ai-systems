@@ -1,0 +1,15 @@
+# Day 9 — Multi-agent research pipeline (Planner -> Researcher -> Writer).
+#
+# Runs FULLY OFFLINE and deterministically by default (mock LLM + mock search),
+# so the graph, logs, and graceful-failure path are verifiable with no API keys.
+# Set real keys (below) to switch any component to its production implementation.
+
+langgraph>=0.2.50          # StateGraph, conditional edges, MemorySaver, recursion guard
+langchain-core>=0.3.0      # message types for the LLM nodes
+langchain-openai>=0.2.0    # ChatOpenAI pointed at OpenRouter (the 3 LLM nodes)
+tavily-python>=0.5.0       # real web search for the Researcher node (optional)
+pydantic>=2.7.0            # structured-JSON plan validation + repair
+typing_extensions>=4.11.0  # TypedDict + Annotated reducers
+python-dotenv>=1.0.0       # load OPENROUTER_*/TAVILY_* from .env
+grandalf>=0.8             # ASCII graph rendering for .get_graph().draw_ascii()
+pytest>=8.0.0             # machine-checked validation of every goal
