@@ -266,6 +266,17 @@ def chunk_pages(
                 )
                 chunk_index += 1
                 overlap_sentences: list[str] = _sentences_for_overlap(current, overlap_tokens)
+                # Progress guard: if the overlap is the ENTIRE buffer we just
+                # emitted, reusing it makes no progress - the same sentence
+                # would re-trigger this branch against an identically-sized
+                # buffer forever (an infinite loop that emits duplicate chunks
+                # until memory is exhausted). This happens when a single
+                # accumulated sentence is already >= overlap_tokens and the
+                # next sentence cannot fit alongside it. Drop the overlap in
+                # that case so the next sentence starts a fresh chunk and ``i``
+                # advances via Case 3.
+                if len(overlap_sentences) >= len(current):
+                    overlap_sentences = []
                 current = list(overlap_sentences)
                 current_tokens = sum(_count_tokens(s) for s in current)
                 # Note: do NOT advance i - we re-evaluate the same sentence
