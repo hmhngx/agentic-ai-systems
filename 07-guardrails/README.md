@@ -18,6 +18,7 @@ This module covers safety and quality enforcement layers for LLM applications—
 
 | File | Description | Status |
 |------|-------------|--------|
+| [`7.1-Hallucination-Detection/`](7.1-Hallucination-Detection/README.md) | Day 10 — runtime groundedness guardrail wrapping any RAG: 3-check pattern (used-chunks? / citations-real? / faithful?), groundedness score 0–1, failure-mode verdict, and a fallback below threshold. 68 passing tests; offline-deterministic by default. Realizes the citation-verification + hallucination-flagging half of `output_validator.py`. | ✅ Done |
 | `input_classifier.py` | Jailbreak and prompt-injection detection with configurable block/allow thresholds | 🔲 Pending |
 | `output_validator.py` | Pydantic schema validation, citation verification, and hallucination flagging on LLM outputs | 🔲 Pending |
 | `pii_detector.py` | Regex + Presidio-based PII detection with redaction before logging or storage | 🔲 Pending |
