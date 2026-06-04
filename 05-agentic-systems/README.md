@@ -22,9 +22,9 @@ This module covers multi-step agent orchestration with LangGraph—state machine
 |-----|----------|----------------------|--------|
 | 8 | [`5.1-LangGraph-Basics/`](5.1-LangGraph-Basics/README.md) | 2-node StateGraph (`input → processor`) with typed state, a conditional edge, MemorySaver checkpointing, ASCII/Mermaid visualization, and per-input state diffs | ✅ Done |
 | 9 | [`5.2-Multi-Agent-Research/`](5.2-Multi-Agent-Research/README.md) | 3-agent pipeline (`planner → researcher → writer`) in one graph: structured-JSON plan, Tavily/mock search, accumulating findings, a self-looping researcher with a `max_iterations` guard, and graceful no-results failure | ✅ Done |
-| 10 | `5.3-Checkpointing-HITL/` *(planned)* | Durable persistence (SqliteSaver) with `interrupt_before` approval gates and resume-from-interrupt | 🔲 Planned |
-| 11 | `5.4-Supervisor-Agents/` *(planned)* | Supervisor/star topology: a router LLM delegating to specialized worker agents that report back | 🔲 Planned |
-| 12 | `5.5-Reflexion-Loop/` *(planned)* | Generate → critique → revise loop with episodic memory of past failures | 🔲 Planned |
+| 11 | [`5.3-Agentic-RAG/`](5.3-Agentic-RAG/README.md) | LangGraph agent using RAG as a tool: retrieve-vs-direct decision, a RAGAS-faithfulness-gated Reflexion loop (refine <0.70, max 2 retries), graceful fallback, and a full-pipeline RAGAS eval (mean faithfulness ≥0.75) | ✅ Done |
+| 12 | `5.4-Checkpointing-HITL/` *(planned)* | Durable persistence (SqliteSaver) with `interrupt_before` approval gates and resume-from-interrupt | 🔲 Planned |
+| 13 | `5.5-Supervisor-Agents/` *(planned)* | Supervisor/star topology: a router LLM delegating to specialized worker agents that report back | 🔲 Planned |
 
 ## Key decisions & tradeoffs
 
@@ -50,6 +50,7 @@ Every delivered artifact ships a machine-checked test suite in which each Day go
 |----------|-------|----------|
 | 5.1 — LangGraph basics | 28 passing | all Day-8 goals + the 3 "common mistakes" (node purity, missing `thread_id`, reducer semantics) |
 | 5.2 — Multi-agent research | 32 passing | all Day-9 goals/tasks/concepts incl. graceful failure under a live search backend |
+| 5.3 — Agentic RAG | 68 passing | all Day-11 goals/tasks + the 4 review concepts + 3 common mistakes (bounded retries, serve-best-not-last, refusal≠hallucination) |
 
 ## References
 
