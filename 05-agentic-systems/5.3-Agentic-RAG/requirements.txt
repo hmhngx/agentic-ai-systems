@@ -1,0 +1,16 @@
+# Day 11 — Agentic RAG (Week 2 Review): LangGraph agent + RAGAS reflexion loop.
+# Runs FULLY OFFLINE and deterministically by default (tf-idf retrieval in
+# Qdrant :memory:, extractive generator, offline faithfulness proxy). Set the
+# env flags in .env.example to switch any component to its real backend.
+langgraph>=0.2.50          # StateGraph, conditional edges, MemorySaver, recursion guard
+langchain-core>=0.3.0      # StructuredTool — wiring rag_v1_complete as a tool
+qdrant-client>=1.7.0       # in-memory vector store (:memory:), no server needed
+numpy>=1.26.0              # tf-idf vectors
+pydantic>=2.7.0            # typed reports / structured outputs
+typing_extensions>=4.11.0  # TypedDict + Annotated reducers
+grandalf>=0.8             # ASCII graph rendering
+python-dotenv>=1.0.0       # load OPENROUTER_*/USE_* from .env
+pytest>=8.0.0             # machine-checked validation of every goal
+# --- optional real backends (NOT needed for the offline default) ---
+# langchain-openai>=0.2.0  # real OpenRouter generation / decision / refine (USE_LLM=1)
+# ragas>=0.2.0             # real RAGAS faithfulness (USE_RAGAS=1)
