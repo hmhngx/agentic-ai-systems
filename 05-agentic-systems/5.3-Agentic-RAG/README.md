@@ -5,6 +5,13 @@ A LangGraph agent that uses **RAG as a tool it decides whether to call**, then
 score. Offline & deterministic by default; `USE_LLM=1` / `USE_RAGAS=1` swap in
 real OpenRouter generation and the real `ragas` library.
 
+## Results
+![alt text](results/review1.png)
+![alt text](results/review2.png)
+![alt text](results/review3.png)
+![alt text](results/review4.png)
+![alt text](results/review5.png)
+
 ## Architecture
 
 ```
