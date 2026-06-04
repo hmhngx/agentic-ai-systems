@@ -1,0 +1,12 @@
+[
+  {"id": "q1", "question": "What is the Helios query quota per day?", "expected_route": "retrieve", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q2", "question": "Which embedding model does Helios use for collections?", "expected_route": "retrieve", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q3", "question": "What is the Helios pro tier pricing?", "expected_route": "retrieve", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q4", "question": "What is the Helios retention period in days?", "expected_route": "retrieve", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q5", "question": "What embedding vectors does Helios produce at creation?", "expected_route": "retrieve", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q6", "question": "How long does Helios keep documents before deleting them?", "expected_route": "retrieve", "expects_reflexion": true, "expects_fallback": false},
+  {"id": "q7", "question": "Given that the pro tier allows 100000 queries per day, is 80000 within that limit?", "expected_route": "direct", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q8", "question": "Could you restate your previous answer more concisely?", "expected_route": "direct", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q9", "question": "Assuming retention is 90 days, when is a day-1 document purged?", "expected_route": "direct", "expects_reflexion": false, "expects_fallback": false},
+  {"id": "q10", "question": "What is the Helios carbon footprint per query?", "expected_route": "retrieve", "expects_reflexion": true, "expects_fallback": true}
+]
