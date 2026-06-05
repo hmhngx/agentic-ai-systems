@@ -1,0 +1,1198 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "CONCEPT",
+      "mentions": 11,
+      "aliases": [],
+      "id": "key-value retrieval"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Samaya AI"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Petroni"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Schick"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Poli"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Rubin"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Berant"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 2,
+      "aliases": [],
+      "id": "OpenAI"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 13,
+      "aliases": [],
+      "id": "MPT-30B-Instruct"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 13,
+      "aliases": [],
+      "id": "GPT-3.5-Turbo"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 4,
+      "aliases": [],
+      "id": "LongChat-13B"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Bing Chat"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "• Query"
+    },
+    {
+      "type": "ORG",
+      "mentions": 6,
+      "aliases": [],
+      "id": "Wikipedia"
+    },
+    {
+      "type": "ORG",
+      "mentions": 4,
+      "aliases": [],
+      "id": "NaturalQuestions-Open"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Multi-Document Question Answering"
+    },
+    {
+      "type": "CONCEPT",
+      "mentions": 9,
+      "aliases": [],
+      "id": "multi-document question answering"
+    },
+    {
+      "type": "ORG",
+      "mentions": 2,
+      "aliases": [],
+      "id": "Experimental Setup"
+    },
+    {
+      "type": "DATASET",
+      "mentions": 6,
+      "aliases": [],
+      "id": "NaturalQuestions"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Lee"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Google"
+    },
+    {
+      "type": "ORG",
+      "mentions": 2,
+      "aliases": [],
+      "id": "MS-MARCO"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Following Kandpal"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Appendix B"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Subrahmanyan Chandrasekhar"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Physics"
+    },
+    {
+      "type": "WORK",
+      "mentions": 2,
+      "aliases": [
+        "Nobel Prize"
+      ],
+      "id": "the Nobel Prize"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 4,
+      "aliases": [],
+      "id": "Wilhelm Conrad Röntgen"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Germany"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Ramón y Cajal"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 4,
+      "aliases": [],
+      "id": "Input Context"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Maria Goeppert Mayer"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Li"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "the OpenAI API"
+    },
+    {
+      "type": "ORG",
+      "mentions": 2,
+      "aliases": [],
+      "id": "Total Retrieved Documents"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 4,
+      "aliases": [],
+      "id": "GPT-4"
+    },
+    {
+      "type": "ORG",
+      "mentions": 2,
+      "aliases": [],
+      "id": "Turbo"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 4,
+      "aliases": [],
+      "id": "JSON"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "the Little Retrieval Test"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 2,
+      "aliases": [],
+      "id": "Andreas"
+    },
+    {
+      "type": "ORG",
+      "mentions": 3,
+      "aliases": [],
+      "id": "Key-Value Pairs"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Chung"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Shaham"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Query-Aware Contextualization Our"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 6,
+      "aliases": [],
+      "id": "MPT-30B"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Press"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "StackOverflow"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "U-"
+    },
+    {
+      "type": "CONCEPT",
+      "mentions": 1,
+      "aliases": [],
+      "id": "positional bias"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Contriever"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Zaheer"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Wang"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "IO"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "CUDA"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "linear"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Peng"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Hyena"
+    },
+    {
+      "type": "ORG",
+      "mentions": 3,
+      "aliases": [],
+      "id": "Transformer"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Qin"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "NLP"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "The Serial-Position Effect The U-shaped"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Ebbinghaus"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Murdock Jr"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Luke Zettlemoyer"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "TACL"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Claudiu Leoveanu-Condrei"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Megan Leszczynski"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Dmytro Okhonko"
+    },
+    {
+      "type": "LOCATION",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Maithra"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Eric Wallace"
+    },
+    {
+      "type": "PERSON",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Sang Michael Xie"
+    },
+    {
+      "type": "ORG",
+      "mentions": 2,
+      "aliases": [
+        "Stanford"
+      ],
+      "id": "the Stanford Center for Research"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "Foundation Models"
+    },
+    {
+      "type": "ORG",
+      "mentions": 1,
+      "aliases": [],
+      "id": "API"
+    },
+    {
+      "type": "MODEL",
+      "mentions": 2,
+      "aliases": [],
+      "id": "Claude"
+    }
+  ],
+  "links": [
+    {
+      "relation": "cost",
+      "evidence": "Evaluating GPT-4 on the full multi-document QA and key-value retrieval experiments would cost upwards of $6000",
+      "source": "key-value retrieval",
+      "target": "GPT-4",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "relevant documents from a search engine, database query results, etc; Petroni et al., 2020; Ram et al., 2023; Shi et al., 2023; Mallen et al., 2023; Schick et al., 2023, inter alia)",
+      "source": "Petroni",
+      "target": "Schick",
+      "key": 0
+    },
+    {
+      "relation": "result",
+      "evidence": "2023; Rubin and Berant, 2023, inter alia) have resulted in language models with larger context windows (e.g., 4096, 32K, and even 100K tokens), but it remains unclear how these extended-context language models make use of their input contexts when performing downstream tasks",
+      "source": "Rubin",
+      "target": "Berant",
+      "key": 0
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "OpenAI",
+      "target": "MPT-30B-Instruct",
+      "key": 0
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "OpenAI",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "OpenAI",
+      "target": "LongChat-13B",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "OpenAI",
+      "target": "API",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "OpenAI",
+      "target": "the Stanford Center for Research",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "OpenAI",
+      "target": "Claude",
+      "key": 0
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "MPT-30B-Instruct",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "MPT-30B-Instruct",
+      "target": "GPT-3.5-Turbo",
+      "key": 1
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "MPT-30B-Instruct",
+      "target": "LongChat-13B",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "MPT-30B-Instruct",
+      "target": "LongChat-13B",
+      "key": 1
+    },
+    {
+      "relation": "compare",
+      "evidence": "Figure 10 compares the multi-document QA performance of MPT-30B and MPT-30B-Instruct as a function of the position of the relevant in-",
+      "source": "MPT-30B-Instruct",
+      "target": "MPT-30B",
+      "key": 0
+    },
+    {
+      "relation": "instruct",
+      "evidence": "1st 5th 10th 15th 20th Position of Document with the Answer 44 46 48 50 52 54 56 Accuracy 20 Total Retrieved Documents (~4K tokens) mpt-30b mpt-30b-instruct Figure 10: Multi-document QA performance of MPT- 30B-Instruct compared against its base model (i.e., be- fore instruction fine-tuning) MPT-30B",
+      "source": "MPT-30B-Instruct",
+      "target": "MPT-30B",
+      "key": 1
+    },
+    {
+      "relation": "see",
+      "evidence": "Surprisingly, we see that both MPT-30B and MPT-30B-Instruct ex- hibit a U-shaped performance curve, where perfor- mance is highest when relevant information occurs at the very beginning or very end of the context",
+      "source": "MPT-30B-Instruct",
+      "target": "MPT-30B",
+      "key": 2
+    },
+    {
+      "relation": "see",
+      "evidence": "In addi- tion, we see that the Llama-2 supervised fine-tuning and reinforcement learning from human feedback procedure slightly mitigates the positional bias in smaller models (13B, akin to trends shown when comparing MPT-30B and MPT-30B-Instruct), but minimally affects trends on larger models (70B)",
+      "source": "MPT-30B-Instruct",
+      "target": "positional bias",
+      "key": 0
+    },
+    {
+      "relation": "investigate",
+      "evidence": "We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context",
+      "source": "GPT-3.5-Turbo",
+      "target": "LongChat-13B",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "GPT-3.5-Turbo",
+      "target": "LongChat-13B",
+      "key": 1
+    },
+    {
+      "relation": "find",
+      "evidence": "When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)",
+      "source": "Wikipedia",
+      "target": "NaturalQuestions-Open",
+      "key": 0
+    },
+    {
+      "relation": "find",
+      "evidence": "When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)",
+      "source": "Wikipedia",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "do",
+      "evidence": "2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not",
+      "source": "Wikipedia",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "use",
+      "evidence": "To obtain a document that answers the question, we use the Wikipedia paragraph that contains the answer from the NaturalQuestions annotations",
+      "source": "Wikipedia",
+      "target": "NaturalQuestions",
+      "key": 0
+    },
+    {
+      "relation": "find",
+      "evidence": "When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)",
+      "source": "NaturalQuestions-Open",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "NaturalQuestions-Open",
+      "target": "Wikipedia",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "To facilitate further work on understanding and improving how language models use their input context, we release our code and evaluation data.1 2 Multi-Document Question Answering Our goal is to better understand how language mod- els use their input context",
+      "source": "Multi-Document Question Answering",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "multi-document question answering",
+      "target": "MPT-30B-Instruct",
+      "key": 0
+    },
+    {
+      "relation": "compare",
+      "evidence": "To better understand the potential effects of instruction fine-tuning on how language models use long input contexts, we compare the multi-document question answering performance of MPT-30B-Instruct against its base model (i.e., before instruction fine-tuning) MPT- 30B",
+      "source": "multi-document question answering",
+      "target": "MPT-30B-Instruct",
+      "key": 1
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "multi-document question answering",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task",
+      "source": "multi-document question answering",
+      "target": "LongChat-13B",
+      "key": 0
+    },
+    {
+      "relation": "do",
+      "evidence": "2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not",
+      "source": "Experimental Setup",
+      "target": "Wikipedia",
+      "key": 0
+    },
+    {
+      "relation": "do",
+      "evidence": "2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not",
+      "source": "Experimental Setup",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object",
+      "source": "Experimental Setup",
+      "target": "JSON",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object",
+      "source": "Experimental Setup",
+      "target": "key-value retrieval",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "We instantiate this task with data from NaturalQuestions-Open (Lee et al., 2019",
+      "source": "NaturalQuestions",
+      "target": "Lee",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "Kwiatkowski et al., 2019), which contains historical queries issued to the Google search engine, coupled with human-annotated answers extracted from Wikipedia",
+      "source": "Google",
+      "target": "Wikipedia",
+      "key": 0
+    },
+    {
+      "relation": "adjust",
+      "evidence": "To collect k −1 distractor documents that do not contain the answer, we use a retrieval system (Con- triever, fine-tuned on MS-MARCO; Izacard et al., 2021) to retrieve the k −1 Wikipedia chunks that are most relevant to the query and do not contain any of the NaturalQuestions-annotated answers.2,3 In the input context, the distractor documents are presented in order of decreasing relevance.4 To modulate the position of relevant information within the input context, we adjust the order of the documents to change the position of the document that contains the answer (Figure 3)",
+      "source": "MS-MARCO",
+      "target": "NaturalQuestions",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "MS-MARCO",
+      "target": "NaturalQuestions-Open",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "MS-MARCO",
+      "target": "Wikipedia",
+      "key": 0
+    },
+    {
+      "relation": "use",
+      "evidence": "Following Kandpal et al. (2022) and Mallen et al. (2023), we use accuracy as our primary evaluation metric, judging whether any of the correct answers (as taken from the NaturalQuestions annotations) appear in the predicted output",
+      "source": "Following Kandpal",
+      "target": "NaturalQuestions",
+      "key": 0
+    },
+    {
+      "relation": "award",
+      "evidence": "The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place",
+      "source": "the Nobel Prize",
+      "target": "Wilhelm Conrad Röntgen",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "the Nobel Prize",
+      "target": "Wilhelm Conrad Röntgen",
+      "key": 1
+    },
+    {
+      "relation": "award",
+      "evidence": "The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place",
+      "source": "the Nobel Prize",
+      "target": "Germany",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "the Nobel Prize",
+      "target": "Input Context",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "the Nobel Prize",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "award",
+      "evidence": "The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place",
+      "source": "Wilhelm Conrad Röntgen",
+      "target": "Germany",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Wilhelm Conrad Röntgen",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "Question: who got the first nobel prize in physics Answer: Input Context Input Context Wilhelm Conrad Röntgen Desired Answer Figure 4: Modulating the input context length of the multi-document question answering example presented in Figure 2",
+      "source": "Wilhelm Conrad Röntgen",
+      "target": "multi-document question answering",
+      "key": 1
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Ramón y Cajal",
+      "target": "the Nobel Prize",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Ramón y Cajal",
+      "target": "Input Context",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Ramón y Cajal",
+      "target": "Wilhelm Conrad Röntgen",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Ramón y Cajal",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Input Context",
+      "target": "Wilhelm Conrad Röntgen",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 3: Modulating the position of relevant informa- tion within the input context for the multi-document question answering example presented in Figure 2",
+      "source": "Input Context",
+      "target": "Wilhelm Conrad Röntgen",
+      "key": 1
+    },
+    {
+      "relation": "win",
+      "evidence": "Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer",
+      "source": "Input Context",
+      "target": "multi-document question answering",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "Question: who got the first nobel prize in physics Answer: Input Context Input Context Wilhelm Conrad Röntgen Desired Answer Figure 4: Modulating the input context length of the multi-document question answering example presented in Figure 2",
+      "source": "Input Context",
+      "target": "multi-document question answering",
+      "key": 1
+    },
+    {
+      "relation": "desire",
+      "evidence": "Input Context 703a7ce5-f17f-4e6d-b895-5836ba5ec71c Desired Output Figure 6: Example of the key-value retrieval task, with an input context and the desired model output",
+      "source": "Input Context",
+      "target": "key-value retrieval",
+      "key": 0
+    },
+    {
+      "relation": "evaluate",
+      "evidence": "We also evaluate LongChat-13B (16K) (Li et al., 2023), which extends the LLaMA-13B (Tou- vron et al., 2023a) context window from 2048 to 16384 tokens by using condensed rotary positional embeddings before fine-tuning with 16384-token sequences",
+      "source": "Li",
+      "target": "LongChat-13B",
+      "key": 0
+    },
+    {
+      "relation": "use",
+      "evidence": "We use the OpenAI API to ex- periment with GPT-3.5-Turbo and GPT-3.5-Turbo",
+      "source": "the OpenAI API",
+      "target": "GPT-3.5-Turbo",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "1st 5th 10th 15th 20th 25th 30th Position of Document with the Answer 50 55 60 65 70 75 Accuracy 30 Total Retrieved Documents (~6K tokens) claude-1.3 claude-1.3-100k gpt-3.5-turbo-0613 gpt-3.5-turbo-16k-0613 mpt-30b-instruct longchat-13b-16k Figure 5: The effect of changing the position of relevant information (document containing the answer) on multi- document question answering performance",
+      "source": "Total Retrieved Documents",
+      "target": "MPT-30B-Instruct",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "1st 5th 10th 15th 20th 25th 30th Position of Document with the Answer 50 55 60 65 70 Accuracy 30 Total Retrieved Documents (~6K tokens) mpt-30b-instruct longchat-13b-16k flan-t5-xxl flan-ul2 Figure 8: When encoder-decoder models (Flan-UL2 and Flan-T5-XXL) evaluated on sequences that are shorter than their encoder’s training-time maximum sequence length (2048 and 512 tokens, respectively), they are relatively robust to changes in the position of relevant information within their input context (left subplot)",
+      "source": "Total Retrieved Documents",
+      "target": "MPT-30B-Instruct",
+      "key": 1
+    },
+    {
+      "relation": "be",
+      "evidence": "3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object",
+      "source": "JSON",
+      "target": "key-value retrieval",
+      "key": 0
+    },
+    {
+      "relation": "mentioned_with",
+      "evidence": "Our synthetic key-value retrieval task shares sim- ilar goals with the Little Retrieval Test of Papail- iopoulos et al. (2023) and the fine-grained line re- trieval task of Li et al. (2023), but we explicitly seek to distill and simplify the task by removing as much natural language semantics as possible (using random UUIDs instead), since language features may present potential confounders",
+      "source": "the Little Retrieval Test",
+      "target": "key-value retrieval",
+      "key": 0
+    },
+    {
+      "relation": "find",
+      "evidence": "O’Connor and Andreas (2021) found that many information-destroying operations had marginal ef- fects on Transformer LMs’ predictions",
+      "source": "Andreas",
+      "target": "Transformer",
+      "key": 0
+    },
+    {
+      "relation": "claude-1.3",
+      "evidence": "1st 25th 50th 75th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 75 Key-Value Pairs (~4K tokens) 1st 35th 70th 105th 140th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 140 Key-Value Pairs (~8K tokens) 1st 50th 100th 150th 200th 250th 300th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 300 Key-Value Pairs (~16K tokens) claude-1.3 claude-1.3-100k gpt-3.5-turbo-0613 gpt-3.5-turbo-16k-0613 mpt-30b-instruct longchat-13b-16k Figure 7: The effect of changing the input context length and the position of relevant information on key-value retrieval performance",
+      "source": "Key-Value Pairs",
+      "target": "MPT-30B-Instruct",
+      "key": 0
+    },
+    {
+      "relation": "place",
+      "evidence": "4.2 Effect of Query-Aware Contextualization Our multi-document QA and key-value retrieval experiments place the query (i.e., question to an- swer or key to retrieve) after the data to process (i.e., the documents or the key-value pairs)",
+      "source": "Query-Aware Contextualization Our",
+      "target": "key-value retrieval",
+      "key": 0
+    },
+    {
+      "relation": "see",
+      "evidence": "In addi- tion, we see that the Llama-2 supervised fine-tuning and reinforcement learning from human feedback procedure slightly mitigates the positional bias in smaller models (13B, akin to trends shown when comparing MPT-30B and MPT-30B-Instruct), but minimally affects trends on larger models (70B)",
+      "source": "positional bias",
+      "target": "MPT-30B",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "Contriever",
+      "target": "MS-MARCO",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "Contriever",
+      "target": "NaturalQuestions-Open",
+      "key": 0
+    },
+    {
+      "relation": "take",
+      "evidence": "A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score",
+      "source": "Contriever",
+      "target": "Wikipedia",
+      "key": 0
+    },
+    {
+      "relation": "pursue",
+      "evidence": "Many lines of work pursue Transformer variants with attention modi- fications like recurrence (Dai et al., 2019), factor- izing attention into computationally less intensive approximations (Beltagy et al., 2020; Zaheer et al., 2020), or low-rank approximations (Wang et al., 2020; Peng et al., 2021)",
+      "source": "Zaheer",
+      "target": "Wang",
+      "key": 0
+    },
+    {
+      "relation": "provide",
+      "evidence": "Dao et al. (2022) in- stead provide a faster exact attention by a carefully- crafted IO-aware CUDA kernel",
+      "source": "IO",
+      "target": "CUDA",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)",
+      "source": "linear",
+      "target": "Peng",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)",
+      "source": "linear",
+      "target": "Hyena",
+      "key": 0
+    },
+    {
+      "relation": "be",
+      "evidence": "Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)",
+      "source": "Peng",
+      "target": "Hyena",
+      "key": 0
+    },
+    {
+      "relation": "analyze",
+      "evidence": "Qin et al. (2023) analyze how efficient Transformers perform on a variety of long-context downstream NLP tasks, finding that long-context transformers are recency-biased and do not effectively use long- range context",
+      "source": "Qin",
+      "target": "NLP",
+      "key": 0
+    },
+    {
+      "relation": "have",
+      "evidence": "6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list",
+      "source": "The Serial-Position Effect The U-shaped",
+      "target": "Ebbinghaus",
+      "key": 0
+    },
+    {
+      "relation": "have",
+      "evidence": "6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list",
+      "source": "The Serial-Position Effect The U-shaped",
+      "target": "Murdock Jr",
+      "key": 0
+    },
+    {
+      "relation": "have",
+      "evidence": "6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list",
+      "source": "Ebbinghaus",
+      "target": "Murdock Jr",
+      "key": 0
+    },
+    {
+      "relation": "like",
+      "evidence": "Acknowledgments We would like to thank Luke Zettlemoyer, who served as our TACL action editor, and the the anonymous reviewers for their comments and feed- back",
+      "source": "Luke Zettlemoyer",
+      "target": "TACL",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Claudiu Leoveanu-Condrei",
+      "target": "Megan Leszczynski",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Claudiu Leoveanu-Condrei",
+      "target": "Dmytro Okhonko",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Claudiu Leoveanu-Condrei",
+      "target": "Maithra",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Claudiu Leoveanu-Condrei",
+      "target": "Eric Wallace",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Claudiu Leoveanu-Condrei",
+      "target": "Sang Michael Xie",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Megan Leszczynski",
+      "target": "Dmytro Okhonko",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Megan Leszczynski",
+      "target": "Maithra",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Megan Leszczynski",
+      "target": "Eric Wallace",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Megan Leszczynski",
+      "target": "Sang Michael Xie",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Dmytro Okhonko",
+      "target": "Maithra",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Dmytro Okhonko",
+      "target": "Eric Wallace",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Dmytro Okhonko",
+      "target": "Sang Michael Xie",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Maithra",
+      "target": "Eric Wallace",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Maithra",
+      "target": "Sang Michael Xie",
+      "key": 0
+    },
+    {
+      "relation": "thank",
+      "evidence": "We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work",
+      "source": "Eric Wallace",
+      "target": "Sang Michael Xie",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "the Stanford Center for Research",
+      "target": "Foundation Models",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "the Stanford Center for Research",
+      "target": "OpenAI",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "the Stanford Center for Research",
+      "target": "API",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "the Stanford Center for Research",
+      "target": "Claude",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "Foundation Models",
+      "target": "OpenAI",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "Foundation Models",
+      "target": "API",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "Foundation Models",
+      "target": "the Stanford Center for Research",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "Foundation Models",
+      "target": "Claude",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "API",
+      "target": "the Stanford Center for Research",
+      "key": 0
+    },
+    {
+      "relation": "support",
+      "evidence": "This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram",
+      "source": "API",
+      "target": "Claude",
+      "key": 0
+    }
+  ]
+}

@@ -1,0 +1,805 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d4" for="edge" attr.name="evidence" attr.type="string" />
+  <key id="d3" for="edge" attr.name="relation" attr.type="string" />
+  <key id="d2" for="node" attr.name="aliases" attr.type="string" />
+  <key id="d1" for="node" attr.name="mentions" attr.type="long" />
+  <key id="d0" for="node" attr.name="type" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="key-value retrieval">
+      <data key="d0">CONCEPT</data>
+      <data key="d1">11</data>
+      <data key="d2" />
+    </node>
+    <node id="Samaya AI">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Petroni">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Schick">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Poli">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Rubin">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Berant">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="OpenAI">
+      <data key="d0">PERSON</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="MPT-30B-Instruct">
+      <data key="d0">MODEL</data>
+      <data key="d1">13</data>
+      <data key="d2" />
+    </node>
+    <node id="GPT-3.5-Turbo">
+      <data key="d0">MODEL</data>
+      <data key="d1">13</data>
+      <data key="d2" />
+    </node>
+    <node id="LongChat-13B">
+      <data key="d0">MODEL</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="Bing Chat">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="• Query">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Wikipedia">
+      <data key="d0">ORG</data>
+      <data key="d1">6</data>
+      <data key="d2" />
+    </node>
+    <node id="NaturalQuestions-Open">
+      <data key="d0">ORG</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="Multi-Document Question Answering">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="multi-document question answering">
+      <data key="d0">CONCEPT</data>
+      <data key="d1">9</data>
+      <data key="d2" />
+    </node>
+    <node id="Experimental Setup">
+      <data key="d0">ORG</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="NaturalQuestions">
+      <data key="d0">DATASET</data>
+      <data key="d1">6</data>
+      <data key="d2" />
+    </node>
+    <node id="Lee">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Google">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="MS-MARCO">
+      <data key="d0">ORG</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="Following Kandpal">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Appendix B">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Subrahmanyan Chandrasekhar">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Physics">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="the Nobel Prize">
+      <data key="d0">WORK</data>
+      <data key="d1">2</data>
+      <data key="d2">Nobel Prize</data>
+    </node>
+    <node id="Wilhelm Conrad Röntgen">
+      <data key="d0">PERSON</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="Germany">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Ramón y Cajal">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Input Context">
+      <data key="d0">PERSON</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="Maria Goeppert Mayer">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Li">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="the OpenAI API">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Total Retrieved Documents">
+      <data key="d0">ORG</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="GPT-4">
+      <data key="d0">MODEL</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="Turbo">
+      <data key="d0">ORG</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="JSON">
+      <data key="d0">PERSON</data>
+      <data key="d1">4</data>
+      <data key="d2" />
+    </node>
+    <node id="the Little Retrieval Test">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Andreas">
+      <data key="d0">LOCATION</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <node id="Key-Value Pairs">
+      <data key="d0">ORG</data>
+      <data key="d1">3</data>
+      <data key="d2" />
+    </node>
+    <node id="Chung">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Shaham">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Query-Aware Contextualization Our">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="MPT-30B">
+      <data key="d0">MODEL</data>
+      <data key="d1">6</data>
+      <data key="d2" />
+    </node>
+    <node id="Press">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="StackOverflow">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="U-">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="positional bias">
+      <data key="d0">CONCEPT</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Contriever">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Zaheer">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Wang">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="IO">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="CUDA">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="linear">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Peng">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Hyena">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Transformer">
+      <data key="d0">ORG</data>
+      <data key="d1">3</data>
+      <data key="d2" />
+    </node>
+    <node id="Qin">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="NLP">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="The Serial-Position Effect The U-shaped">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Ebbinghaus">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Murdock Jr">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Luke Zettlemoyer">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="TACL">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Claudiu Leoveanu-Condrei">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Megan Leszczynski">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Dmytro Okhonko">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Maithra">
+      <data key="d0">LOCATION</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Eric Wallace">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Sang Michael Xie">
+      <data key="d0">PERSON</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="the Stanford Center for Research">
+      <data key="d0">ORG</data>
+      <data key="d1">2</data>
+      <data key="d2">Stanford</data>
+    </node>
+    <node id="Foundation Models">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="API">
+      <data key="d0">ORG</data>
+      <data key="d1">1</data>
+      <data key="d2" />
+    </node>
+    <node id="Claude">
+      <data key="d0">MODEL</data>
+      <data key="d1">2</data>
+      <data key="d2" />
+    </node>
+    <edge source="key-value retrieval" target="GPT-4" id="0">
+      <data key="d3">cost</data>
+      <data key="d4">Evaluating GPT-4 on the full multi-document QA and key-value retrieval experiments would cost upwards of $6000</data>
+    </edge>
+    <edge source="Petroni" target="Schick" id="0">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">relevant documents from a search engine, database query results, etc; Petroni et al., 2020; Ram et al., 2023; Shi et al., 2023; Mallen et al., 2023; Schick et al., 2023, inter alia)</data>
+    </edge>
+    <edge source="Rubin" target="Berant" id="0">
+      <data key="d3">result</data>
+      <data key="d4">2023; Rubin and Berant, 2023, inter alia) have resulted in language models with larger context windows (e.g., 4096, 32K, and even 100K tokens), but it remains unclear how these extended-context language models make use of their input contexts when performing downstream tasks</data>
+    </edge>
+    <edge source="OpenAI" target="MPT-30B-Instruct" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="OpenAI" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="OpenAI" target="LongChat-13B" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="OpenAI" target="API" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="OpenAI" target="the Stanford Center for Research" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="OpenAI" target="Claude" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="GPT-3.5-Turbo" id="1">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="LongChat-13B" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="LongChat-13B" id="1">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="MPT-30B" id="0">
+      <data key="d3">compare</data>
+      <data key="d4">Figure 10 compares the multi-document QA performance of MPT-30B and MPT-30B-Instruct as a function of the position of the relevant in-</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="MPT-30B" id="1">
+      <data key="d3">instruct</data>
+      <data key="d4">1st 5th 10th 15th 20th Position of Document with the Answer 44 46 48 50 52 54 56 Accuracy 20 Total Retrieved Documents (~4K tokens) mpt-30b mpt-30b-instruct Figure 10: Multi-document QA performance of MPT- 30B-Instruct compared against its base model (i.e., be- fore instruction fine-tuning) MPT-30B</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="MPT-30B" id="2">
+      <data key="d3">see</data>
+      <data key="d4">Surprisingly, we see that both MPT-30B and MPT-30B-Instruct ex- hibit a U-shaped performance curve, where perfor- mance is highest when relevant information occurs at the very beginning or very end of the context</data>
+    </edge>
+    <edge source="MPT-30B-Instruct" target="positional bias" id="0">
+      <data key="d3">see</data>
+      <data key="d4">In addi- tion, we see that the Llama-2 supervised fine-tuning and reinforcement learning from human feedback procedure slightly mitigates the positional bias in smaller models (13B, akin to trends shown when comparing MPT-30B and MPT-30B-Instruct), but minimally affects trends on larger models (70B)</data>
+    </edge>
+    <edge source="GPT-3.5-Turbo" target="LongChat-13B" id="0">
+      <data key="d3">investigate</data>
+      <data key="d4">We empirically investigate this question via controlled experiments with a variety of state-of- the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models in set- tings that require accessing and using information within an input context</data>
+    </edge>
+    <edge source="GPT-3.5-Turbo" target="LongChat-13B" id="1">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="Wikipedia" target="NaturalQuestions-Open" id="0">
+      <data key="d3">find</data>
+      <data key="d4">When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)</data>
+    </edge>
+    <edge source="Wikipedia" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">find</data>
+      <data key="d4">When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)</data>
+    </edge>
+    <edge source="Wikipedia" target="multi-document question answering" id="0">
+      <data key="d3">do</data>
+      <data key="d4">2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not</data>
+    </edge>
+    <edge source="Wikipedia" target="NaturalQuestions" id="0">
+      <data key="d3">use</data>
+      <data key="d4">To obtain a document that answers the question, we use the Wikipedia paragraph that contains the answer from the NaturalQuestions annotations</data>
+    </edge>
+    <edge source="NaturalQuestions-Open" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">find</data>
+      <data key="d4">When re- trieving from Wikipedia to answer queries from NaturalQuestions-Open, we find that model perfor- mance saturates long before retriever recall satu- rates, indicating that current models fail to effec- tively use additional retrieved documents—using 50 documents instead of 20 retrieved documents only marginally improves performance (∼1.5% for GPT-3.5-Turbo and ∼1% for claude-1.3)</data>
+    </edge>
+    <edge source="NaturalQuestions-Open" target="Wikipedia" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="Multi-Document Question Answering" target="multi-document question answering" id="0">
+      <data key="d3">be</data>
+      <data key="d4">To facilitate further work on understanding and improving how language models use their input context, we release our code and evaluation data.1 2 Multi-Document Question Answering Our goal is to better understand how language mod- els use their input context</data>
+    </edge>
+    <edge source="multi-document question answering" target="MPT-30B-Instruct" id="0">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="multi-document question answering" target="MPT-30B-Instruct" id="1">
+      <data key="d3">compare</data>
+      <data key="d4">To better understand the potential effects of instruction fine-tuning on how language models use long input contexts, we compare the multi-document question answering performance of MPT-30B-Instruct against its base model (i.e., before instruction fine-tuning) MPT- 30B</data>
+    </edge>
+    <edge source="multi-document question answering" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="multi-document question answering" target="LongChat-13B" id="0">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">Model Closed-Book Oracle LongChat-13B (16K) 35.0% 83.4% MPT-30B-Instruct 31.5% 81.9% GPT-3.5-Turbo 56.1% 88.3% GPT-3.5-Turbo (16K) 56.0% 88.6% Claude-1.3 48.3% 76.1% Claude-1.3 (100K) 48.2% 76.4% Table 1: Closed-book and oracle accuracy of language models on the multi-document question answering task</data>
+    </edge>
+    <edge source="Experimental Setup" target="Wikipedia" id="0">
+      <data key="d3">do</data>
+      <data key="d4">2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not</data>
+    </edge>
+    <edge source="Experimental Setup" target="multi-document question answering" id="0">
+      <data key="d3">do</data>
+      <data key="d4">2.1 Experimental Setup In the multi-document question answering task, the model inputs are (i) a question to answer and (ii) k documents (e.g., passages from Wikipedia), where exactly one of the documents contains the answer 1nelsonliu.me/papers/lost-in-the-middle to the question and k −1 “distractor” documents do not</data>
+    </edge>
+    <edge source="Experimental Setup" target="JSON" id="0">
+      <data key="d3">be</data>
+      <data key="d4">3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object</data>
+    </edge>
+    <edge source="Experimental Setup" target="key-value retrieval" id="0">
+      <data key="d3">be</data>
+      <data key="d4">3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object</data>
+    </edge>
+    <edge source="NaturalQuestions" target="Lee" id="0">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">We instantiate this task with data from NaturalQuestions-Open (Lee et al., 2019</data>
+    </edge>
+    <edge source="Google" target="Wikipedia" id="0">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">Kwiatkowski et al., 2019), which contains historical queries issued to the Google search engine, coupled with human-annotated answers extracted from Wikipedia</data>
+    </edge>
+    <edge source="MS-MARCO" target="NaturalQuestions" id="0">
+      <data key="d3">adjust</data>
+      <data key="d4">To collect k −1 distractor documents that do not contain the answer, we use a retrieval system (Con- triever, fine-tuned on MS-MARCO; Izacard et al., 2021) to retrieve the k −1 Wikipedia chunks that are most relevant to the query and do not contain any of the NaturalQuestions-annotated answers.2,3 In the input context, the distractor documents are presented in order of decreasing relevance.4 To modulate the position of relevant information within the input context, we adjust the order of the documents to change the position of the document that contains the answer (Figure 3)</data>
+    </edge>
+    <edge source="MS-MARCO" target="NaturalQuestions-Open" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="MS-MARCO" target="Wikipedia" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="Following Kandpal" target="NaturalQuestions" id="0">
+      <data key="d3">use</data>
+      <data key="d4">Following Kandpal et al. (2022) and Mallen et al. (2023), we use accuracy as our primary evaluation metric, judging whether any of the correct answers (as taken from the NaturalQuestions annotations) appear in the predicted output</data>
+    </edge>
+    <edge source="the Nobel Prize" target="Wilhelm Conrad Röntgen" id="0">
+      <data key="d3">award</data>
+      <data key="d4">The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place</data>
+    </edge>
+    <edge source="the Nobel Prize" target="Wilhelm Conrad Röntgen" id="1">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="the Nobel Prize" target="Germany" id="0">
+      <data key="d3">award</data>
+      <data key="d4">The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place</data>
+    </edge>
+    <edge source="the Nobel Prize" target="Input Context" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="the Nobel Prize" target="multi-document question answering" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Wilhelm Conrad Röntgen" target="Germany" id="0">
+      <data key="d3">award</data>
+      <data key="d4">The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received... Document [3](Title: Scientist) and pursued through a unique method, was essentially in place</data>
+    </edge>
+    <edge source="Wilhelm Conrad Röntgen" target="multi-document question answering" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Wilhelm Conrad Röntgen" target="multi-document question answering" id="1">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">Question: who got the first nobel prize in physics Answer: Input Context Input Context Wilhelm Conrad Röntgen Desired Answer Figure 4: Modulating the input context length of the multi-document question answering example presented in Figure 2</data>
+    </edge>
+    <edge source="Ramón y Cajal" target="the Nobel Prize" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Ramón y Cajal" target="Input Context" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Ramón y Cajal" target="Wilhelm Conrad Röntgen" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Ramón y Cajal" target="multi-document question answering" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Input Context" target="Wilhelm Conrad Röntgen" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Input Context" target="Wilhelm Conrad Röntgen" id="1">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 3: Modulating the position of relevant informa- tion within the input context for the multi-document question answering example presented in Figure 2</data>
+    </edge>
+    <edge source="Input Context" target="multi-document question answering" id="0">
+      <data key="d3">win</data>
+      <data key="d4">Ramón y Cajal won the Nobel Prize in 1906 for his remarkable... Question: who got the first nobel prize in physics Answer: Input Context Wilhelm Conrad Röntgen Desired Answer Figure 2: Example of the multi-document question answering task, with an input context and the desired model answer</data>
+    </edge>
+    <edge source="Input Context" target="multi-document question answering" id="1">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">Question: who got the first nobel prize in physics Answer: Input Context Input Context Wilhelm Conrad Röntgen Desired Answer Figure 4: Modulating the input context length of the multi-document question answering example presented in Figure 2</data>
+    </edge>
+    <edge source="Input Context" target="key-value retrieval" id="0">
+      <data key="d3">desire</data>
+      <data key="d4">Input Context 703a7ce5-f17f-4e6d-b895-5836ba5ec71c Desired Output Figure 6: Example of the key-value retrieval task, with an input context and the desired model output</data>
+    </edge>
+    <edge source="Li" target="LongChat-13B" id="0">
+      <data key="d3">evaluate</data>
+      <data key="d4">We also evaluate LongChat-13B (16K) (Li et al., 2023), which extends the LLaMA-13B (Tou- vron et al., 2023a) context window from 2048 to 16384 tokens by using condensed rotary positional embeddings before fine-tuning with 16384-token sequences</data>
+    </edge>
+    <edge source="the OpenAI API" target="GPT-3.5-Turbo" id="0">
+      <data key="d3">use</data>
+      <data key="d4">We use the OpenAI API to ex- periment with GPT-3.5-Turbo and GPT-3.5-Turbo</data>
+    </edge>
+    <edge source="Total Retrieved Documents" target="MPT-30B-Instruct" id="0">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">1st 5th 10th 15th 20th 25th 30th Position of Document with the Answer 50 55 60 65 70 75 Accuracy 30 Total Retrieved Documents (~6K tokens) claude-1.3 claude-1.3-100k gpt-3.5-turbo-0613 gpt-3.5-turbo-16k-0613 mpt-30b-instruct longchat-13b-16k Figure 5: The effect of changing the position of relevant information (document containing the answer) on multi- document question answering performance</data>
+    </edge>
+    <edge source="Total Retrieved Documents" target="MPT-30B-Instruct" id="1">
+      <data key="d3">be</data>
+      <data key="d4">1st 5th 10th 15th 20th 25th 30th Position of Document with the Answer 50 55 60 65 70 Accuracy 30 Total Retrieved Documents (~6K tokens) mpt-30b-instruct longchat-13b-16k flan-t5-xxl flan-ul2 Figure 8: When encoder-decoder models (Flan-UL2 and Flan-T5-XXL) evaluated on sequences that are shorter than their encoder’s training-time maximum sequence length (2048 and 512 tokens, respectively), they are relatively robust to changes in the position of relevant information within their input context (left subplot)</data>
+    </edge>
+    <edge source="JSON" target="key-value retrieval" id="0">
+      <data key="d3">be</data>
+      <data key="d4">3.1 Experimental Setup In our synthetic key-value retrieval task, the inputs are (i) a string-serialized JSON object with k key- value pairs, where each of the keys and values are unique, randomly-generated UUIDs and (ii) a key within the aforementioned JSON object</data>
+    </edge>
+    <edge source="the Little Retrieval Test" target="key-value retrieval" id="0">
+      <data key="d3">mentioned_with</data>
+      <data key="d4">Our synthetic key-value retrieval task shares sim- ilar goals with the Little Retrieval Test of Papail- iopoulos et al. (2023) and the fine-grained line re- trieval task of Li et al. (2023), but we explicitly seek to distill and simplify the task by removing as much natural language semantics as possible (using random UUIDs instead), since language features may present potential confounders</data>
+    </edge>
+    <edge source="Andreas" target="Transformer" id="0">
+      <data key="d3">find</data>
+      <data key="d4">O’Connor and Andreas (2021) found that many information-destroying operations had marginal ef- fects on Transformer LMs’ predictions</data>
+    </edge>
+    <edge source="Key-Value Pairs" target="MPT-30B-Instruct" id="0">
+      <data key="d3">claude-1.3</data>
+      <data key="d4">1st 25th 50th 75th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 75 Key-Value Pairs (~4K tokens) 1st 35th 70th 105th 140th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 140 Key-Value Pairs (~8K tokens) 1st 50th 100th 150th 200th 250th 300th Position of Key to Retrieve 40 50 60 70 80 90 100 Accuracy 300 Key-Value Pairs (~16K tokens) claude-1.3 claude-1.3-100k gpt-3.5-turbo-0613 gpt-3.5-turbo-16k-0613 mpt-30b-instruct longchat-13b-16k Figure 7: The effect of changing the input context length and the position of relevant information on key-value retrieval performance</data>
+    </edge>
+    <edge source="Query-Aware Contextualization Our" target="key-value retrieval" id="0">
+      <data key="d3">place</data>
+      <data key="d4">4.2 Effect of Query-Aware Contextualization Our multi-document QA and key-value retrieval experiments place the query (i.e., question to an- swer or key to retrieve) after the data to process (i.e., the documents or the key-value pairs)</data>
+    </edge>
+    <edge source="positional bias" target="MPT-30B" id="0">
+      <data key="d3">see</data>
+      <data key="d4">In addi- tion, we see that the Llama-2 supervised fine-tuning and reinforcement learning from human feedback procedure slightly mitigates the positional bias in smaller models (13B, akin to trends shown when comparing MPT-30B and MPT-30B-Instruct), but minimally affects trends on larger models (70B)</data>
+    </edge>
+    <edge source="Contriever" target="MS-MARCO" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="Contriever" target="NaturalQuestions-Open" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="Contriever" target="Wikipedia" id="0">
+      <data key="d3">take</data>
+      <data key="d4">A retrieval system (Contriever, fine- tuned on MS-MARCO) takes an input query from NaturalQuestions-Open and returns the k docu- ments from Wikipedia with the highest relevance score</data>
+    </edge>
+    <edge source="Zaheer" target="Wang" id="0">
+      <data key="d3">pursue</data>
+      <data key="d4">Many lines of work pursue Transformer variants with attention modi- fications like recurrence (Dai et al., 2019), factor- izing attention into computationally less intensive approximations (Beltagy et al., 2020; Zaheer et al., 2020), or low-rank approximations (Wang et al., 2020; Peng et al., 2021)</data>
+    </edge>
+    <edge source="IO" target="CUDA" id="0">
+      <data key="d3">provide</data>
+      <data key="d4">Dao et al. (2022) in- stead provide a faster exact attention by a carefully- crafted IO-aware CUDA kernel</data>
+    </edge>
+    <edge source="linear" target="Peng" id="0">
+      <data key="d3">be</data>
+      <data key="d4">Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)</data>
+    </edge>
+    <edge source="linear" target="Hyena" id="0">
+      <data key="d3">be</data>
+      <data key="d4">Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)</data>
+    </edge>
+    <edge source="Peng" target="Hyena" id="0">
+      <data key="d3">be</data>
+      <data key="d4">Separately, there are attempts to do away with attention entirely to remove quadratic sequence length complexity, of- ten through convolution and/or linear RNNs, e.g., in RWKV (Peng, 2023), S4 (Gu et al., 2022), or Hyena (Poli et al., 2023)</data>
+    </edge>
+    <edge source="Qin" target="NLP" id="0">
+      <data key="d3">analyze</data>
+      <data key="d4">Qin et al. (2023) analyze how efficient Transformers perform on a variety of long-context downstream NLP tasks, finding that long-context transformers are recency-biased and do not effectively use long- range context</data>
+    </edge>
+    <edge source="The Serial-Position Effect The U-shaped" target="Ebbinghaus" id="0">
+      <data key="d3">have</data>
+      <data key="d4">6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list</data>
+    </edge>
+    <edge source="The Serial-Position Effect The U-shaped" target="Murdock Jr" id="0">
+      <data key="d3">have</data>
+      <data key="d4">6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list</data>
+    </edge>
+    <edge source="Ebbinghaus" target="Murdock Jr" id="0">
+      <data key="d3">have</data>
+      <data key="d4">6.3 The Serial-Position Effect The U-shaped curve we observe in this work has a connection in psychology known as the serial- position effect (Ebbinghaus, 1913; Murdock Jr, 1962), that states that in free-association recall of elements from a list, humans tend to best re- member the first and last elements of the list</data>
+    </edge>
+    <edge source="Luke Zettlemoyer" target="TACL" id="0">
+      <data key="d3">like</data>
+      <data key="d4">Acknowledgments We would like to thank Luke Zettlemoyer, who served as our TACL action editor, and the the anonymous reviewers for their comments and feed- back</data>
+    </edge>
+    <edge source="Claudiu Leoveanu-Condrei" target="Megan Leszczynski" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Claudiu Leoveanu-Condrei" target="Dmytro Okhonko" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Claudiu Leoveanu-Condrei" target="Maithra" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Claudiu Leoveanu-Condrei" target="Eric Wallace" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Claudiu Leoveanu-Condrei" target="Sang Michael Xie" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Megan Leszczynski" target="Dmytro Okhonko" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Megan Leszczynski" target="Maithra" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Megan Leszczynski" target="Eric Wallace" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Megan Leszczynski" target="Sang Michael Xie" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Dmytro Okhonko" target="Maithra" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Dmytro Okhonko" target="Eric Wallace" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Dmytro Okhonko" target="Sang Michael Xie" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Maithra" target="Eric Wallace" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Maithra" target="Sang Michael Xie" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="Eric Wallace" target="Sang Michael Xie" id="0">
+      <data key="d3">thank</data>
+      <data key="d4">We also thank Claudiu Leoveanu-Condrei, Megan Leszczynski, Dmytro Okhonko, Maithra Raghu, Eric Wallace and Sang Michael Xie for feedback and discussions that helped improve this work</data>
+    </edge>
+    <edge source="the Stanford Center for Research" target="Foundation Models" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="the Stanford Center for Research" target="OpenAI" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="the Stanford Center for Research" target="API" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="the Stanford Center for Research" target="Claude" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="Foundation Models" target="OpenAI" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="Foundation Models" target="API" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="Foundation Models" target="the Stanford Center for Research" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="Foundation Models" target="Claude" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="API" target="the Stanford Center for Research" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+    <edge source="API" target="Claude" id="0">
+      <data key="d3">support</data>
+      <data key="d4">This work was supported by the Stanford Center for Research on Foundation Models (CRFM), by OpenAI via an API credits grant to the Stanford CRFM, and by Anthropic via the Claude academic access pro- gram</data>
+    </edge>
+  </graph>
+</graphml>
