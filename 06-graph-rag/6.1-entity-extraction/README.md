@@ -7,6 +7,10 @@ Qdrant, visualize the entity clusters, and report the most-connected entities.
 `entity_extractor.py` is the deliverable: **document in → NetworkX graph out**, saved
 to disk, with a clustered visualization and a top-N report.
 
+## Results
+![alt text](results/entity1.png)
+![alt text](results/entity2.png)
+
 ```
                 ┌─────────┐   ┌───────────┐   ┌────────────────┐   ┌───────────┐
    document ──► │ loader  │──►│ extractor │──►│ disambiguation │──►│   graph   │
