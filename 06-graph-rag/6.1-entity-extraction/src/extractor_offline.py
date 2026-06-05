@@ -63,6 +63,7 @@ _LEXICON: dict[str, EntityType] = {
     "MPT-30B-Instruct": EntityType.MODEL,
     "LongChat": EntityType.MODEL,
     "LongChat-13B": EntityType.MODEL,
+    "OpenAI": EntityType.ORG,
     "NaturalQuestions": EntityType.DATASET,
     "Natural Questions": EntityType.DATASET,
     "multi-document question answering": EntityType.CONCEPT,
@@ -122,8 +123,8 @@ def extract_offline(pages: list[Page]) -> ExtractionResult:
         if name in entities:
             existing = entities[name]
             existing.mentions += 1
-            # upgrade a generic NER type to a more specific domain type
-            if _SPECIFICITY[etype] > _SPECIFICITY[existing.type]:
+            # curated lexicon always wins; otherwise only upgrade to a more specific type
+            if curated or _SPECIFICITY[etype] > _SPECIFICITY[existing.type]:
                 existing.type = etype
         else:
             entities[name] = Entity(name=name, type=etype)
