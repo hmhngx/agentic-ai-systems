@@ -18,7 +18,7 @@ This module covers knowledge-graph-augmented retrieval—entity extraction, grap
 
 | File | Description | Status |
 |------|-------------|--------|
-| `entity_extractor.py` | LLM-powered entity and relationship extraction with Pydantic schema validation | 🔲 Pending |
+| `entity_extractor.py` | LLM-powered entity and relationship extraction with Pydantic schema validation | ✅ Done — see [`6.1-entity-extraction/`](6.1-entity-extraction/) |
 | `graph_builder.py` | NetworkX graph construction, deduplication, and persistence from extracted triples | 🔲 Pending |
 | `community_summaries.py` | Leiden clustering and LLM-generated community-level summaries | 🔲 Pending |
 | `hybrid_graph_retriever.py` | Query router selecting vector, graph traversal, or community summary retrieval | 🔲 Pending |
