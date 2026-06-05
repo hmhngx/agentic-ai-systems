@@ -112,3 +112,6 @@ tmp/
 
 # Code explanations
 explanations/
+
+# Docs (local planning/specs — not versioned)
+docs/
