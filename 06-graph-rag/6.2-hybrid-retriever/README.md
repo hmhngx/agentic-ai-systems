@@ -30,6 +30,9 @@ Compares **Vanilla RAG** (pure vector search) against **Hybrid Graph RAG** (vect
 
 > The ties inflate vanilla's apparent score. In a fair semantic-embedding run, Q2–Q4 require multi-hop reasoning across separate chunks — vanilla RAG would fail them. The offline hash embeddings happened to produce token collisions that accidentally retrieved the right passages.
 
+### Query test
+![alt text](results/retriever1.png)
+
 ---
 
 ## How it works
