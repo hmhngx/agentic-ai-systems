@@ -1,0 +1,5 @@
+networkx>=3.3
+qdrant-client>=1.9
+numpy>=1.26
+openai>=1.30
+pytest>=8.0
