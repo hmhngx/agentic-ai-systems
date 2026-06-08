@@ -164,3 +164,53 @@ def bfs_1hop(
 
     triples.sort(key=lambda t: t.score, reverse=True)
     return triples[: config.MAX_TRIPLES]
+
+
+# ── Merger ────────────────────────────────────────────────────────────────────
+
+def merge_results(
+    vector_chunks: list[RetrievedChunk],
+    graph_triples: list[GraphTriple],
+    graph: nx.MultiDiGraph,
+    query_vec: np.ndarray,
+) -> HybridResult:
+    """Deduplicate triples by (source, relation, target). Chunks passed through as-is."""
+    seen_triple_keys: set[tuple[str, str, str]] = set()
+    deduped_triples: list[GraphTriple] = []
+    for t in graph_triples:
+        key = (t.source_entity, t.relation, t.target_entity)
+        if key not in seen_triple_keys:
+            seen_triple_keys.add(key)
+            deduped_triples.append(t)
+
+    return HybridResult(chunks=list(vector_chunks), triples=deduped_triples)
+
+
+# ── Hybrid retriever ──────────────────────────────────────────────────────────
+
+def hybrid_retrieve(
+    client: QdrantClient,
+    graph: nx.MultiDiGraph,
+    query: str,
+    query_vec: np.ndarray,
+    top_k: int | None = None,
+) -> HybridResult:
+    """Vector top-k + 1-hop BFS from entities annotated on retrieved chunks."""
+    k = top_k if top_k is not None else config.TOP_K_CHUNKS
+
+    # Leg 1: vector search
+    vector_chunks = vanilla_retrieve(client, query_vec, top_k=k)
+
+    # Collect seed entities from retrieved chunk payloads
+    seen_ents: set[str] = set()
+    seed_entities: list[str] = []
+    for chunk in vector_chunks:
+        for ent in chunk.entities:
+            if ent not in seen_ents:
+                seen_ents.add(ent)
+                seed_entities.append(ent)
+
+    # Leg 2: graph BFS
+    triples = bfs_1hop(graph, seed_entities)
+
+    return merge_results(vector_chunks, triples, graph, query_vec)
