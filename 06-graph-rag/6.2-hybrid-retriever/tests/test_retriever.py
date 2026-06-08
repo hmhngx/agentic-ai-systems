@@ -45,3 +45,56 @@ def test_vanilla_retrieve_top_k_passed_to_qdrant():
     vanilla_retrieve(mock_client, np.zeros(256, dtype=np.float32), top_k=3)
     call_kwargs = mock_client.query_points.call_args.kwargs
     assert call_kwargs["limit"] == 3
+
+
+import networkx as nx
+from src.retriever import bfs_1hop, GraphTriple
+
+
+@pytest.fixture
+def small_graph():
+    G = nx.MultiDiGraph()
+    for n in ["A", "B", "C", "D"]:
+        G.add_node(n)
+    G.add_edge("A", "B", relation="knows", weight=1)
+    G.add_edge("B", "C", relation="works_at", weight=2)
+    G.add_edge("D", "A", relation="manages", weight=1)
+    return G
+
+
+def test_bfs_1hop_returns_outgoing_edges(small_graph):
+    triples = bfs_1hop(small_graph, ["A"])
+    keys = {(t.source_entity, t.relation, t.target_entity) for t in triples}
+    assert ("A", "knows", "B") in keys
+
+
+def test_bfs_1hop_returns_incoming_edges(small_graph):
+    triples = bfs_1hop(small_graph, ["A"])
+    keys = {(t.source_entity, t.relation, t.target_entity) for t in triples}
+    assert ("D", "manages", "A") in keys
+
+
+def test_bfs_does_not_go_two_hops(small_graph):
+    triples = bfs_1hop(small_graph, ["A"])
+    entities_reached = {t.target_entity for t in triples} | {t.source_entity for t in triples}
+    assert "C" not in entities_reached  # C is 2 hops from A
+
+
+def test_bfs_unknown_entity_returns_empty(small_graph):
+    assert bfs_1hop(small_graph, ["NONEXISTENT"]) == []
+
+
+def test_bfs_max_neighbors_caps_outgoing(small_graph):
+    G = small_graph
+    for i in range(15):
+        G.add_node(f"X{i}")
+        G.add_edge("A", f"X{i}", relation="rel", weight=1)
+    triples = bfs_1hop(G, ["A"], max_neighbors=3)
+    outgoing_from_a = [t for t in triples if t.source_entity == "A"]
+    assert len(outgoing_from_a) <= 3
+
+
+def test_bfs_no_duplicate_triples(small_graph):
+    triples = bfs_1hop(small_graph, ["A", "A"])  # seed repeated
+    keys = [(t.source_entity, t.relation, t.target_entity) for t in triples]
+    assert len(keys) == len(set(keys))

@@ -108,3 +108,59 @@ def vanilla_retrieve(
         )
         for p in resp.points
     ]
+
+
+# ── Graph traversal ───────────────────────────────────────────────────────────
+
+def bfs_1hop(
+    graph: nx.MultiDiGraph,
+    seed_entities: list[str],
+    max_neighbors: int | None = None,
+) -> list[GraphTriple]:
+    """Collect all (source, relation, target) triples exactly 1 hop from seed entities.
+
+    Includes both outgoing edges (entity → neighbor) and incoming edges (predecessor → entity).
+    Results are deduplicated by (source, relation, target) and capped at MAX_TRIPLES.
+    """
+    max_n = max_neighbors if max_neighbors is not None else config.MAX_NEIGHBORS
+    seen: set[tuple[str, str, str]] = set()
+    triples: list[GraphTriple] = []
+
+    for entity in seed_entities:
+        if entity not in graph:
+            continue
+
+        # Outgoing edges: entity → neighbor
+        successors = list(graph.successors(entity))[:max_n]
+        for nb in successors:
+            for edge_data in graph[entity][nb].values():
+                key = (entity, edge_data.get("relation", "related_to"), nb)
+                if key not in seen:
+                    seen.add(key)
+                    triples.append(
+                        GraphTriple(
+                            source_entity=entity,
+                            relation=edge_data.get("relation", "related_to"),
+                            target_entity=nb,
+                            score=float(edge_data.get("weight", 1.0)),
+                        )
+                    )
+
+        # Incoming edges: predecessor → entity
+        predecessors = list(graph.predecessors(entity))[:max_n]
+        for pred in predecessors:
+            for edge_data in graph[pred][entity].values():
+                key = (pred, edge_data.get("relation", "related_to"), entity)
+                if key not in seen:
+                    seen.add(key)
+                    triples.append(
+                        GraphTriple(
+                            source_entity=pred,
+                            relation=edge_data.get("relation", "related_to"),
+                            target_entity=entity,
+                            score=float(edge_data.get("weight", 1.0)),
+                        )
+                    )
+
+    triples.sort(key=lambda t: t.score, reverse=True)
+    return triples[: config.MAX_TRIPLES]
