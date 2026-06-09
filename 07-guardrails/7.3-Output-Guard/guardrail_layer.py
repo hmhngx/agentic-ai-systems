@@ -23,7 +23,7 @@ import os
 import pathlib
 import sys
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Callable
 
 from dotenv import load_dotenv
@@ -67,7 +67,7 @@ def _setup_logging(log_to_file: bool = True) -> None:
 def _log_block(layer: str, text: str, check: str, reason: str) -> None:
     _log.warning(
         json.dumps({
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "layer": layer,
             "check": check,
             "reason": reason,
@@ -159,11 +159,21 @@ class GuardedRAG:
         self._output_guard = output_guard or OutputGuard()
 
         if input_guard is _sentinel:
-            # Auto-import InputGuard from 7.2 if the module is on the path.
-            try:
-                from src.guard import InputGuard  # type: ignore[import]
-                self._input_guard: object | None = InputGuard()
-            except (ImportError, AttributeError):
+            # Try to load InputGuard from 7.2-Input-Guard if it exists on disk.
+            _guard_path = pathlib.Path(__file__).parent.parent / "7.2-Input-Guard" / "src" / "guard.py"
+            if _guard_path.exists():
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("input_guard_72", _guard_path)
+                if spec and spec.loader:
+                    mod = importlib.util.module_from_spec(spec)
+                    try:
+                        spec.loader.exec_module(mod)  # type: ignore[union-attr]
+                        self._input_guard: object | None = mod.InputGuard()
+                    except Exception:
+                        self._input_guard = None
+                else:
+                    self._input_guard = None
+            else:
                 self._input_guard = None
         else:
             self._input_guard = input_guard
