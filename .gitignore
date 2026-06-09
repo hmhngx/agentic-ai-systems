@@ -113,5 +113,7 @@ tmp/
 # Code explanations
 explanations/
 
-# Docs (local planning/specs — not versioned)
-docs/
+# Docs (local planning/specs — never commit or push; guarded by .githooks + CI)
+/docs/
+
+.cursor/

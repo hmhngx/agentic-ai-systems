@@ -1,0 +1,20 @@
+#!/bin/sh
+# Block pushes that would publish docs/ to the remote.
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    range="$local_sha"
+  else
+    range="$remote_sha..$local_sha"
+  fi
+
+  pushed_docs=$(git diff --name-only "$range" 2>/dev/null | grep -E '^docs/' || true)
+  if [ -n "$pushed_docs" ]; then
+    echo "ERROR: docs/ must not be pushed to GitHub (local-only planning specs)." >&2
+    echo "Files in outgoing commits:" >&2
+    echo "$pushed_docs" | sed 's/^/  /' >&2
+    exit 1
+  fi
+done

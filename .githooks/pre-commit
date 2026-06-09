@@ -1,0 +1,11 @@
+#!/bin/sh
+# Block commits that include docs/ (local planning specs — never versioned).
+
+staged_docs=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^docs/' || true)
+if [ -n "$staged_docs" ]; then
+  echo "ERROR: docs/ must not be committed (local-only planning specs)." >&2
+  echo "Staged files:" >&2
+  echo "$staged_docs" | sed 's/^/  /' >&2
+  echo "Unstage with: git reset HEAD -- docs/" >&2
+  exit 1
+fi
