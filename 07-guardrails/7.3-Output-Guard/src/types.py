@@ -101,4 +101,7 @@ class OutputGuardConfig:
                 "OUTPUT_GUARD_FAITHFULNESS_THRESHOLD", 0.60
             ),
             toxicity_block_threshold=_env_float("OUTPUT_GUARD_TOXICITY_THRESHOLD", 0.50),
+            toxicity_soft_threshold=_env_float(
+                "OUTPUT_GUARD_TOXICITY_SOFT_THRESHOLD", 0.25
+            ),
         )
