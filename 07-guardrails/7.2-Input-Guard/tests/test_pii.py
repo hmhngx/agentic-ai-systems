@@ -70,3 +70,68 @@ def test_allows_clean_queries(checker, query):
 def test_returns_latency(checker):
     result = checker.check("What is RAG?")
     assert result.latency_ms >= 0.0
+
+
+# ---------------------------------------------------------------------------
+# LLM escalation path (soft zone: 0.40 ≤ confidence < 0.80)
+# "Please forward the results to Sarah Johnson" → full name, confidence 0.60
+# ---------------------------------------------------------------------------
+
+_SOFT_QUERY = "Please forward the results to Sarah Johnson"
+
+
+def test_llm_clears_soft_pii():
+    """LLM returning 'no_pii' should override the soft block → ALLOW."""
+    from unittest.mock import patch
+    config = GuardConfig(use_llm=True)
+    checker = PIIChecker(config)
+    with patch("src.pii_checker.llm_pii_check", return_value="no_pii") as mock:
+        result = checker.check(_SOFT_QUERY)
+    assert result.verdict == Verdict.ALLOW
+    assert result.check == "pii"
+    mock.assert_called_once_with(_SOFT_QUERY, config)
+
+
+def test_llm_confirms_soft_pii():
+    """LLM returning 'pii_detected' should keep the block and mention LLM."""
+    from unittest.mock import patch
+    config = GuardConfig(use_llm=True)
+    checker = PIIChecker(config)
+    with patch("src.pii_checker.llm_pii_check", return_value="pii_detected"):
+        result = checker.check(_SOFT_QUERY)
+    assert result.verdict == Verdict.BLOCK
+    assert "LLM" in result.reason
+    assert result.check == "pii"
+
+
+def test_llm_pii_error_falls_back_to_block():
+    """LLMJudgeError should fall back to the conservative offline BLOCK."""
+    from unittest.mock import patch
+    from src.llm_judge import LLMJudgeError
+    config = GuardConfig(use_llm=True)
+    checker = PIIChecker(config)
+    with patch("src.pii_checker.llm_pii_check", side_effect=LLMJudgeError("timeout")):
+        result = checker.check(_SOFT_QUERY)
+    assert result.verdict == Verdict.BLOCK
+    assert result.check == "pii"
+
+
+def test_hard_pii_never_calls_llm():
+    """High-confidence PII (≥ hard threshold) must BLOCK without LLM involvement."""
+    from unittest.mock import patch
+    config = GuardConfig(use_llm=True)
+    checker = PIIChecker(config)
+    with patch("src.pii_checker.llm_pii_check") as mock:
+        result = checker.check("My SSN is 123-45-6789")
+    assert result.verdict == Verdict.BLOCK
+    mock.assert_not_called()
+
+
+def test_llm_not_called_when_disabled():
+    """use_llm=False must never invoke the LLM regardless of confidence zone."""
+    from unittest.mock import patch
+    config = GuardConfig(use_llm=False)
+    checker = PIIChecker(config)
+    with patch("src.pii_checker.llm_pii_check") as mock:
+        checker.check(_SOFT_QUERY)
+    mock.assert_not_called()

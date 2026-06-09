@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 import time
 
+from src.llm_judge import LLMJudgeError, llm_pii_check
 from src.types import CheckResult, GuardConfig, Verdict
 
 _EMAIL_RE = re.compile(r"[\w.+\-]+@[\w\-]+\.[\w.]{2,}", re.I)
@@ -71,6 +72,7 @@ class PIIChecker:
     def __init__(self, config: GuardConfig) -> None:
         self._hard = config.pii_hard_threshold
         self._soft = config.pii_soft_threshold
+        self._config = config
 
     def check(self, query: str) -> CheckResult:
         t0 = time.perf_counter()
@@ -85,28 +87,58 @@ class PIIChecker:
                 latency_ms=(time.perf_counter() - t0) * 1000,
             )
 
-        latency = (time.perf_counter() - t0) * 1000
-
+        # Hard block — regex confidence too high to dispute with LLM
         if confidence >= self._hard:
             return CheckResult(
                 check="pii",
                 verdict=Verdict.BLOCK,
                 reason=f"PII detected: {pii_type} (confidence {confidence:.0%})",
                 score=confidence,
-                latency_ms=latency,
+                latency_ms=(time.perf_counter() - t0) * 1000,
             )
+
+        # Soft zone — escalate to LLM when available for a second opinion
         if confidence >= self._soft:
+            if self._config.use_llm:
+                try:
+                    llm_verdict = llm_pii_check(query, self._config)
+                    if llm_verdict == "no_pii":
+                        return CheckResult(
+                            check="pii",
+                            verdict=Verdict.ALLOW,
+                            reason=(
+                                f"possible {pii_type} cleared by LLM "
+                                f"(confidence {confidence:.0%})"
+                            ),
+                            score=confidence,
+                            latency_ms=(time.perf_counter() - t0) * 1000,
+                        )
+                    # "pii_detected" or any unexpected token → treat as confirmed
+                    return CheckResult(
+                        check="pii",
+                        verdict=Verdict.BLOCK,
+                        reason=(
+                            f"PII confirmed by LLM: {pii_type} "
+                            f"(confidence {confidence:.0%})"
+                        ),
+                        score=confidence,
+                        latency_ms=(time.perf_counter() - t0) * 1000,
+                    )
+                except LLMJudgeError:
+                    pass  # conservative: fall through to offline block below
             return CheckResult(
                 check="pii",
                 verdict=Verdict.BLOCK,
                 reason=f"possible PII detected: {pii_type} (confidence {confidence:.0%})",
                 score=confidence,
-                latency_ms=latency,
+                latency_ms=(time.perf_counter() - t0) * 1000,
             )
+
+        # Below soft threshold — no PII concern
         return CheckResult(
             check="pii",
             verdict=Verdict.ALLOW,
             reason="no PII detected",
             score=0.0,
-            latency_ms=latency,
+            latency_ms=(time.perf_counter() - t0) * 1000,
         )
