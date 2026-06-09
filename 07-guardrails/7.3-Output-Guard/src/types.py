@@ -94,8 +94,9 @@ class OutputGuardConfig:
 
     @classmethod
     def from_env(cls) -> OutputGuardConfig:
+        api_key_present = bool(os.environ.get("OPENROUTER_API_KEY", "").strip())
         return cls(
-            use_llm=_env_bool("OUTPUT_GUARD_USE_LLM", False),
+            use_llm=_env_bool("OUTPUT_GUARD_USE_LLM", api_key_present),
             llm_model=os.environ.get("OPENROUTER_CHAT_MODEL", "openai/gpt-4o-mini"),
             faithfulness_retry_threshold=_env_float(
                 "OUTPUT_GUARD_FAITHFULNESS_THRESHOLD", 0.60

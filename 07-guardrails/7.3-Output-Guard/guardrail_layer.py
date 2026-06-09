@@ -32,14 +32,6 @@ _THIS_DIR = str(pathlib.Path(__file__).parent)
 if _THIS_DIR not in sys.path:
     sys.path.insert(0, _THIS_DIR)
 
-# InputGuard lives in the sibling 7.2-Input-Guard module.
-# Append (not prepend) so that 7.3's own src/ package takes priority.
-_INPUT_GUARD_SRC = pathlib.Path(__file__).parent.parent / "7.2-Input-Guard"
-if _INPUT_GUARD_SRC.exists():
-    _input_guard_str = str(_INPUT_GUARD_SRC)
-    if _input_guard_str not in sys.path:
-        sys.path.append(_input_guard_str)
-
 from src.guard import OutputGuard
 from src.types import OutputGuardConfig, Verdict
 
@@ -123,6 +115,48 @@ def _default_rag(question: str, context: list[str], hint: str | None = None) -> 
     return (response.choices[0].message.content or "").strip()
 
 
+# --- InputGuard loader ------------------------------------------------------
+
+
+def _try_load_input_guard() -> object | None:
+    """Load InputGuard from the sibling 7.2-Input-Guard module.
+
+    7.2's internal `from src.*` imports collide with 7.3's own `src` package
+    already registered in sys.modules. To resolve this we temporarily evict 7.3's
+    src entries, insert 7.2's root at sys.path[0] so its `from src.xxx` statements
+    resolve correctly, perform the import, then restore 7.3's original state.
+
+    The returned InputGuard instance keeps live object references to all 7.2 types
+    (InjectionChecker, InputGuardReport, etc.) — no re-import happens at call time.
+    """
+    root = pathlib.Path(__file__).parent.parent / "7.2-Input-Guard"
+    if not root.exists():
+        return None
+
+    root_str = str(root)
+    saved = {k: v for k, v in list(sys.modules.items())
+             if k == "src" or k.startswith("src.")}
+    for k in saved:
+        del sys.modules[k]
+
+    sys.path.insert(0, root_str)
+    try:
+        from src.guard import InputGuard  # noqa: PLC0415  # resolves to 7.2/src/guard.py
+        guard: object | None = InputGuard()
+    except Exception:
+        guard = None
+    finally:
+        try:
+            sys.path.remove(root_str)
+        except ValueError:
+            pass
+        for k in [k for k in sys.modules if k == "src" or k.startswith("src.")]:
+            del sys.modules[k]
+        sys.modules.update(saved)
+
+    return guard
+
+
 # --- GuardedRAG -------------------------------------------------------------
 
 _sentinel = object()
@@ -159,22 +193,7 @@ class GuardedRAG:
         self._output_guard = output_guard or OutputGuard()
 
         if input_guard is _sentinel:
-            # Try to load InputGuard from 7.2-Input-Guard if it exists on disk.
-            _guard_path = pathlib.Path(__file__).parent.parent / "7.2-Input-Guard" / "src" / "guard.py"
-            if _guard_path.exists():
-                import importlib.util
-                spec = importlib.util.spec_from_file_location("input_guard_72", _guard_path)
-                if spec and spec.loader:
-                    mod = importlib.util.module_from_spec(spec)
-                    try:
-                        spec.loader.exec_module(mod)  # type: ignore[union-attr]
-                        self._input_guard: object | None = mod.InputGuard()
-                    except Exception:
-                        self._input_guard = None
-                else:
-                    self._input_guard = None
-            else:
-                self._input_guard = None
+            self._input_guard: object | None = _try_load_input_guard()
         else:
             self._input_guard = input_guard
 
